@@ -5,9 +5,9 @@ import Swup from 'swup';
 const swup = new Swup();
 const links = [
   { href: '/', text: 'Ana Səhifə' },
-  { href: '/scripts', text: 'Scriptlər' },
-  { href: '/about', text: 'Haqqımızda' },
-  { href: '/contact', text: 'Əlaqə' },
+  { href: '/scripts/', text: 'Scriptlər' },
+  { href: '/about/', text: 'Haqqımızda' },
+  { href: '/contact/', text: 'Əlaqə' },
 ];
 
 // State to control the mobile menu
@@ -60,17 +60,17 @@ onMounted(() => {
   
       <!-- Desktop navigation links -->
       <div class="hidden md:flex space-x-8">
-        <a
+        <span
           v-for="link in links"
           :key="link.href"
-          :href="link.href"
+          @click="swup.navigate(link.href)"
           :class="[
-            'text-gray-600 hover:text-primary-500 transition-colors',
+            'text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',
             isActive(link.href) ? 'text-orange-500' : ''
           ]"
         >
           {{ link.text }}
-        </a>
+      </span>
       </div>
   
       <!-- Mobile menu (visible only when open) with animation -->
@@ -84,17 +84,17 @@ onMounted(() => {
           '-translate-y-10 opacity-0': !isMenuOpen,
         }"
       >
-        <a
+        <span
           v-for="link in links"
           :key="link.href"
-          :href="link.href"
+          @click="swup.navigate(link.href);"
           :class="[
-            'block text-gray-600 hover:text-primary-500 transition-colors',
+            'block text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',
             isActive(link.href) ? 'text-orange-500' : ''
           ]"
         >
           {{ link.text }}
-        </a>
+    </span>
       </div>
   </template>
   
