@@ -1,0 +1,45 @@
+---
+import { type Script } from '../data/scripts';
+import { Image } from 'astro:assets';
+
+// Component accepts all Script properties as props
+type Props = Script;
+
+// Destructure required props
+const { title, description, price, image, isFree } = Astro.props;
+
+// Fallback image for development/missing images
+const fallbackImage = "https://placehold.co/600x400/orange/white?text=Script+Image";
+---
+
+<!-- Script card with hover animation -->
+<div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
+  <!-- Script preview image -->
+  <div class="w-full h-48">
+    <img 
+      src={image || fallbackImage} 
+      alt={title}
+      class="w-full h-full object-cover"
+      onerror="this.onerror=null; this.src='https://placehold.co/600x400/orange/white?text=Script+Image'"
+    />
+  </div>
+  
+  <!-- Script information -->
+  <div class="p-6">
+    <h3 class="text-xl font-semibold text-gray-800">{title}</h3>
+    <p class="mt-2 text-gray-600">{description}</p>
+    
+    <!-- Price and details button -->
+    <div class="mt-4 flex justify-between items-center">
+      <span class={`text-lg font-bold ${isFree ? 'text-green-600' : 'text-primary-600'}`}>
+        {isFree ? 'Ücretsiz' : `${price} ₺`}
+      </span>
+      <a
+        href={`/scripts/${title.toLowerCase().replace(/\s+/g, '-')}`}
+        class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
+      >
+        Detaylar
+      </a>
+    </div>
+  </div>
+</div>

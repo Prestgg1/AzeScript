@@ -1,0 +1,28 @@
+---
+// Navigation links configuration
+const links = [
+  { href: '/', text: 'Ana Səhifə' },
+  { href: '/scripts', text: 'Scriptlər' },
+  { href: '/about', text: 'Haqqımızda' },
+  { href: '/contact', text: 'Əlaqə' },
+];
+---
+
+<!-- Main navigation bar -->
+<nav class="bg-white shadow-lg">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo/Site title -->
+      <a href="/" class="text-2xl font-bold text-primary-600">AzeScript</a>
+      
+      <!-- Navigation links (hidden on mobile) -->
+      <div class="hidden md:flex space-x-8">
+        {links.map(link => (
+          <a href={link.href} class="text-gray-600 hover:text-primary-500 transition-colors">
+            {link.text}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,110 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import StarRating from '../../components/StarRating.astro';
+import CommentSection from '../../components/CommentSection.astro';
+import { scripts, comments } from '../../data/scripts';
+
+export function getStaticPaths() {
+  return scripts.map((script) => ({
+    params: { slug: script.title.toLowerCase().replace(/\s+/g, '-') },
+    props: { script },
+  }));
+}
+
+const { script } = Astro.props;
+---
+
+<Layout title={`${script.title} - WebScript Market`}>
+  <div class="max-w-4xl mx-auto">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+      <img
+        src={script.image}
+        alt={script.title}
+        class="w-full h-64 object-cover"
+      />
+      
+      <div class="p-8">
+        <div class="flex items-center justify-between mb-4">
+          <h1 class="text-3xl font-bold text-gray-800">{script.title}</h1>
+          <div class="flex items-center space-x-2">
+            <button class="text-gray-600 hover:text-primary-500">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center space-x-4 mb-6">
+          <StarRating rating={script.rating || 0} size="lg" />
+          <span class="text-gray-600">({script.downloads || 0} indirme)</span>
+        </div>
+
+        <div class="prose prose-orange max-w-none mb-8">
+          <p>{script.longDescription}</p>
+        </div>
+
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <span class={`text-2xl font-bold ${script.isFree ? 'text-green-600' : 'text-primary-600'}`}>
+              {script.isFree ? 'Ücretsiz' : `${script.price} ₺`}
+            </span>
+          </div>
+          <div class="space-x-4">
+            {script.demoUrl && (
+              <a
+                href={script.demoUrl}
+                target="_blank"
+                class="inline-block bg-gray-100 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-200 transition-colors"
+              >
+                Demo
+              </a>
+            )}
+            <button class="bg-primary-500 text-white px-6 py-2 rounded-md hover:bg-primary-600 transition-colors">
+              Satın Al
+            </button>
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-8">
+          {script.features && (
+            <div>
+              <h2 class="text-xl font-semibold mb-4">Özellikler</h2>
+              <ul class="space-y-2">
+                {script.features.map((feature) => (
+                  <li class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-primary-500" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {script.requirements && (
+            <div>
+              <h2 class="text-xl font-semibold mb-4">Gereksinimler</h2>
+              <ul class="space-y-2">
+                {script.requirements.map((req) => (
+                  <li class="flex items-center space-x-2">
+                    <svg class="w-5 h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                    </svg>
+                    <span>{req}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        <div class="border-t pt-8">
+          <h2 class="text-2xl font-semibold mb-6">Yorumlar ve Değerlendirmeler</h2>
+          <CommentSection comments={comments} />
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

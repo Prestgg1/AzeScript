@@ -1,0 +1,28 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import ScriptCard from '../../components/ScriptCard.astro';
+import { scripts } from '../../data/scripts';
+---
+
+<Layout title="Scriptlər - AzeScript Market">
+  <div class="mb-8">
+    <h1 class="text-3xl font-bold text-gray-800 mb-4">Bütün Scriptlər</h1>
+    <div class="flex gap-4 mb-6">
+      <button class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600">
+        Hamısı
+      </button>
+      <button class="bg-white text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50">
+        Pulsuz
+      </button>
+      <button class="bg-white text-gray-600 px-4 py-2 rounded-md hover:bg-gray-50">
+        Pullu
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    {scripts.map(script => (
+      <ScriptCard {...script} />
+    ))}
+  </div>
+</Layout>
