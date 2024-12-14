@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import Swup from 'swup';
 
 const swup = new Swup();
@@ -15,10 +15,15 @@ const isMenuOpen = ref(false);
 
 // State to store the current path
 const currentPath = ref(swup.location.pathname);
-console.log(currentPath.value)
-swup.hooks.on('content:replace', (visit) => {  currentPath.value=visit.to.url;console.log('Salam'+currentPath.value) });
+swup.hooks.on('visit:start', (visit) => {  currentPath.value=visit.to.url;});
 
-const isActive = (href) => currentPath.value === href;
+const isActive = (href) => href=='/'? currentPath.value==href:currentPath.value.startsWith(href);
+
+
+onMounted(() => {
+  currentPath.value = swup.location.pathname
+})
+
 
 </script>
 
@@ -65,7 +70,7 @@ const isActive = (href) => currentPath.value === href;
             :href="link.href"
             :class="[
               'text-gray-600 hover:text-primary-500 transition-colors',
-              isActive(link.href) ? 'text-orange-500' : ''
+              isActive(link.href)  ? 'text-orange-500' : ''
             ]"
           >
             {{ link.text }}
