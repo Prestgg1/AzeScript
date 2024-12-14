@@ -61,7 +61,7 @@ const isMenuOpen = ref(false);
       </div>
 
       <!-- Mobile menu (visible only when open) -->
-      <div v-if="isMenuOpen" class="md:hidden mt-4 space-y-2">
+      <div v-if="isMenuOpen" class="md:hidden mt-4 py-3 space-y-2">
         <a
           v-for="link in links"
           :key="link.href"

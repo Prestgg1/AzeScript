@@ -3,10 +3,9 @@ import Header from "../components/Header.vue";
 import Footer from "../components/Footer.astro";
 
 interface Props {
-  title: string;
+	title: string;
 }
-const {title}=Astro.props 
-
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -18,30 +17,28 @@ const {title}=Astro.props
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<body class="min-h-screen bg-orange-50" >
-		<Header />
-		<main id="swup" class="container swup-transition-fade min-h-[80vh] mx-auto px-4 py-8">
-			
+	<body class="min-h-screen bg-orange-50">
+		<Header client:load />
+		<main
+			id="swup"
+			class="container swup-transition-fade min-h-[80vh] mx-auto px-4 py-8"
+		>
 			<slot />
 		</main>
 		<Footer />
 
+		<!-- Swup.js Script -->
+		<script>
+			import Swup from "swup";
+			// @ts-ignore
+			import("@swup/fade-theme").then((ThemeModule) => {
+				const SwupFadeTheme = ThemeModule.default;
 
-    <!-- Swup.js Script -->
-	<script>
-		import('swup').then((SwupModule) => {
-		  const Swup = SwupModule.default;
-		  import('@swup/fade-theme').then((ThemeModule) => {
-			const SwupFadeTheme = ThemeModule.default;
-  
-			// Swup'u başlat
-			const swup = new Swup({
-			  plugins: [new SwupFadeTheme()],
+				const swup = new Swup({
+					plugins: [new SwupFadeTheme()],
+				});
 			});
-		  });
-		});
-	  </script> 
-	  </script>
+		</script>
 	</body>
 </html>
 
@@ -54,17 +51,17 @@ const {title}=Astro.props
 	}
 
 	html.is-animating .swup-transition-fade {
-  opacity: 0;
-  transform: translateY(10px);
-  transition: all 0.4s ease;
-}
+		opacity: 0;
+		transform: translateY(10px);
+		transition: all 0.4s ease;
+	}
 
-.swup-transition-fade {
-  opacity: 1;
-  transform: translateY(0);
-  transition: all 0.4s ease;
-}
-html{
-	overscroll-behavior:none;
-}
+	.swup-transition-fade {
+		opacity: 1;
+		transform: translateY(0);
+		transition: all 0.4s ease;
+	}
+	html {
+		overscroll-behavior: none;
+	}
 </style>
