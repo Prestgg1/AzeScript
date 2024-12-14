@@ -15,21 +15,19 @@ const isMenuOpen = ref(false);
 
 // State to store the current path
 const currentPath = ref(swup.location.url);
+swup.hooks.on('content:replace', (visit) => {  currentPath.value=visit.to.url });
 
 // Function to check if the link is active
 const isActive = (href) => currentPath.value === href;
 
 // Update the current path whenever the page changes
-const updatePath = () => {
-  currentPath.value = swup.location.url;
-};
 
-onMounted(() => {
+/* onMounted(() => {
   // Listen for Swup page transitions
   swup.hooks.on('page:view', () => {
     updatePath(); // Update path on page load
   });
-});
+}); */
 </script>
 
 <template>
