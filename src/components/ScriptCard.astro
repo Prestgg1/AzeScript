@@ -2,6 +2,7 @@
 import { type Script } from '../data/scripts';
 import { Image } from 'astro:assets';
 
+
 // Component accepts all Script properties as props
 type Props = Script;
 
@@ -35,7 +36,7 @@ const fallbackImage = "https://placehold.co/600x400/orange/white?text=Script+Ima
         {isFree ? 'Pulsuz' : `${price} ₺`}
       </span>
       <a
-        href={`/scripts/${title.toLowerCase().replace(/\s+/g, '-')}`}
+        href={`/scripts/${title.toLowerCase().replace(/\s+/g, '-')}/`}
         class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
       >
         Davamı
