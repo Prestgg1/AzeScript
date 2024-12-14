@@ -14,7 +14,7 @@ const links = [
 const isMenuOpen = ref(false);
 
 // State to store the current path
-const currentPath = ref(swup.location.pathname);
+const currentPath = ref('');
 swup.hooks.on('visit:start', (visit) => {  currentPath.value=visit.to.url;});
 
 const isActive = (href) => href=='/'? currentPath.value==href:currentPath.value.startsWith(href);
@@ -36,7 +36,7 @@ onMounted(() => {
 
         <!-- Mobile menu button -->
         <button
-          class="md:hidden text-gray-600 focus:outline-none focus:text-primary-500"
+          class="md:hidden block  text-gray-600 focus:outline-none focus:text-primary-500"
           @click="isMenuOpen = !isMenuOpen"
         >
           <svg
@@ -79,13 +79,13 @@ onMounted(() => {
       </div>
 
       <!-- Mobile menu (visible only when open) with animation -->
-      <div v-if="isMenuOpen" class="md:hidden mt-4 py-3 space-y-2 transition-all duration-500 transform ease-in-out">
+      <div v-if="isMenuOpen" class="md:hidden  mt-4 py-3 space-y-2 transition-all duration-500 transform ease-in-out">
         <a
           v-for="link in links"
           :key="link.href"
           :href="link.href"
           :class="[
-            'block text-gray-600 hover:text-primary-500 transition-colors',
+            'block text-gray-600  hover:text-primary-500 transition-colors',
             isActive(link.href) ? 'text-orange-500' : ''
           ]"
         >
