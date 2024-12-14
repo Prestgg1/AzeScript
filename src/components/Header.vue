@@ -15,7 +15,7 @@ const isMenuOpen = ref(false);
 
 // State to store the current path
 const currentPath = ref('');
-swup.hooks.on('visit:start', (visit) => {  currentPath.value=visit.to.url;});
+swup.hooks.on('visit:start', (visit) => {  currentPath.value=visit.to.url; if(isMenuOpen){isMenuOpen.value=false}});
 
 const isActive = (href) => href=='/'? currentPath.value==href:currentPath.value.startsWith(href);
 
@@ -98,13 +98,5 @@ onMounted(() => {
 
 <style scoped>
 /* Add custom styles for mobile menu transition */
-.md\:hidden {
-  transform: translateY(-10px);
-  opacity: 0;
-  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-}
-.md\:hidden + .is-active {
-  transform: translateY(0);
-  opacity: 1;
-}
+
 </style>
