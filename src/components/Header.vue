@@ -1,6 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import Swup from 'swup';
 
+const swup = new Swup();
 const links = [
   { href: '/', text: 'Ana Səhifə' },
   { href: '/scripts', text: 'Scriptlər' },
@@ -10,6 +12,24 @@ const links = [
 
 // State to control the mobile menu
 const isMenuOpen = ref(false);
+
+// State to store the current path
+const currentPath = ref(swup.location.url);
+
+// Function to check if the link is active
+const isActive = (href) => currentPath.value === href;
+
+// Update the current path whenever the page changes
+const updatePath = () => {
+  currentPath.value = swup.location.url;
+};
+
+onMounted(() => {
+  // Listen for Swup page transitions
+  swup.hooks.on('page:view', () => {
+    updatePath(); // Update path on page load
+  });
+});
 </script>
 
 <template>
@@ -53,20 +73,26 @@ const isMenuOpen = ref(false);
             v-for="link in links"
             :key="link.href"
             :href="link.href"
-            class="text-gray-600 hover:text-primary-500 transition-colors"
+            :class="[
+              'text-gray-600 hover:text-primary-500 transition-colors',
+              isActive(link.href) ? 'text-orange-500' : ''
+            ]"
           >
             {{ link.text }}
           </a>
         </div>
       </div>
 
-      <!-- Mobile menu (visible only when open) -->
-      <div v-if="isMenuOpen" class="md:hidden mt-4 py-3 space-y-2">
+      <!-- Mobile menu (visible only when open) with animation -->
+      <div v-if="isMenuOpen" class="md:hidden mt-4 py-3 space-y-2 transition-all duration-500 transform ease-in-out">
         <a
           v-for="link in links"
           :key="link.href"
           :href="link.href"
-          class="block text-gray-600 hover:text-primary-500 transition-colors"
+          :class="[
+            'block text-gray-600 hover:text-primary-500 transition-colors',
+            isActive(link.href) ? 'text-orange-500' : ''
+          ]"
         >
           {{ link.text }}
         </a>
@@ -76,5 +102,14 @@ const isMenuOpen = ref(false);
 </template>
 
 <style scoped>
-/* Add custom styles if needed */
+/* Add custom styles for mobile menu transition */
+.md\:hidden {
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.md\:hidden + .is-active {
+  transform: translateY(0);
+  opacity: 1;
+}
 </style>
