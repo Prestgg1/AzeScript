@@ -15,7 +15,7 @@ const isMenuOpen = ref(false);
 
 // State to store the current path
 const currentPath = ref(swup.location.url);
-swup.hooks.on('content:replace', (visit) => {  currentPath.value=visit.to.url });
+swup.hooks.on('content:replace', (visit) => {  currentPath.value=visit.to.url;console.log('Salam'+currentPath.value) });
 
 // Function to check if the link is active
 const isActive = (href) => currentPath.value === href;
