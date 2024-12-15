@@ -1,0 +1,135 @@
+---
+
+// Common form component for authentication pages
+interface Props {
+  type: 'register' | 'login' | 'forgot-password';
+  title: string;
+  description?: string;
+}
+
+const { type, title, description } = Astro.props;
+
+// Helper function to get form fields based on type
+const getFormFields = () => {
+  switch (type) {
+    case 'register':
+      return [
+        { type: 'text' as const, name: 'firstName', label: 'Ad', required: true },
+        { type: 'text' as const, name: 'lastName', label: 'Soyad', required: true },
+        { type: 'email' as const, name: 'email', label: 'E-posta', required: true },
+        { type: 'password' as const, name: 'password', label: 'Şifre', required: true },
+        { type: 'password' as const, name: 'confirmPassword', label: 'Şifre Tekrar', required: true }
+      ];
+    case 'forgot-password':
+      return [
+        { type: 'email' as const, name: 'email', label: 'E-posta', required: true }
+      ];
+    default:
+      return [
+        { type: 'email' as const, name: 'email', label: 'E-posta', required: true },
+        { type: 'password' as const, name: 'password', label: 'Şifre', required: true }
+      ];
+  }
+};
+
+const fields = getFormFields();
+---
+
+<div class="max-w-md  w-full mx-auto">
+  <div class="bg-white rounded-lg shadow-md p-8">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">{title}</h1>
+    
+    {description && (
+      <p class="text-gray-600 mb-6 text-center">{description}</p>
+    )}
+
+    <form class="space-y-8 ">
+      <!-- Render form fields dynamically -->
+      {fields.map(field => (
+        <div>
+          <label for={field.name} class="block text-sm font-medium text-gray-700">
+            {field.label}
+          </label>
+          <input
+            type={field.type}
+            id={field.name}
+            name={field.name}
+            required={field.required}
+            class="mt-1 focus:outline-none block input w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+          />
+        </div>
+      ))}
+
+      <!-- Additional form elements based on type -->
+      {type === 'login' && (
+        <div class="flex items-center justify-between">
+          <div class="flex items-center">
+            <input
+              type="checkbox"
+              id="remember"
+              name="remember"
+              class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            />
+            <label for="remember" class="ml-2 block text-sm text-gray-700">
+              Məni Xatırla
+            </label>
+          </div>
+
+          <a href="/auth/forgot-password" class="text-sm text-primary-600 hover:text-primary-500">
+            Şifrəmi Unutdum
+          </a>
+        </div>
+      )}
+
+      {type === 'register' && (
+        <div class="flex items-center">
+          <input
+            type="checkbox"
+            id="terms"
+            name="terms"
+            required
+            class="h-4 w-4 focus:outline-none rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+          />
+          <label for="terms" class="ml-2 block text-sm text-gray-700">
+            <a href="/terms" class="text-primary-600 hover:text-primary-500">
+              İstifadə şərtlərini
+            </a> qəbul edirəm
+          </label>
+        </div>
+      )}
+
+      <!-- Submit button -->
+      <button
+        type="submit"
+        class="w-full bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
+      >
+        {type === 'login' ? 'Daxil Ol' : 
+         type === 'register' ? 'Qeydiyatdan keç' : 
+         'Şifrə Yeniləmə Linki Göndər'}
+      </button>
+    </form>
+
+    <!-- Form footer links -->
+    <div class="mt-6 text-center">
+      {type === 'login' ? (
+        <p class="text-sm text-gray-600">
+          Hesabınız yoxdu?
+          <a href="/auth/register" class="text-primary-600 hover:text-primary-500">
+            Qeydiyatdan keçin
+          </a>
+        </p>
+      ) : type === 'register' ? (
+        <p class="text-sm text-gray-600">
+          Hesabınız var?
+          <a href="/auth/login" class="text-primary-600 hover:text-primary-500">
+            Daxil Ol
+          </a>
+        </p>
+      ) : (
+        <a href="/auth/login" class="text-sm text-primary-600 hover:text-primary-500">
+          Giriş səhifəsinə qayıt
+        </a>
+      )}
+    </div>
+  </div>
+</div>

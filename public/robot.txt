@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://https://azescript.pages.dev/sitemap-index.xml

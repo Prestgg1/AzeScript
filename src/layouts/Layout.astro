@@ -14,6 +14,7 @@ const { title } = Astro.props;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
@@ -21,7 +22,7 @@ const { title } = Astro.props;
 		<Header />
 		<main
 			id="swup"
-			class="container swup-transition-fade min-h-[80vh] mx-auto px-4 py-8"
+			class="container swup-transition-fade min-h-[80vh] flex flex-col mx-auto px-4 py-8"
 		>
 			<slot />
 		</main>
@@ -30,6 +31,7 @@ const { title } = Astro.props;
 </html>
 
 <style>
+	
 	html,
 	body {
 		margin: 0;

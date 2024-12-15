@@ -1,7 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import Swup from 'swup';
-
 const swup = new Swup();
 const links = [
   { href: '/', text: 'Ana Səhifə' },
@@ -85,7 +84,7 @@ onBeforeUnmount(() => {
     </button>
 
     <!-- Desktop navigation links -->
-    <div class="hidden md:flex space-x-8">
+    <div class="hidden md:flex justify-center items-center space-x-8">
       <span
         v-for="link in links"
         :key="link.href"
@@ -97,6 +96,7 @@ onBeforeUnmount(() => {
       >
         {{ link.text }}
       </span>
+    
     </div>
 
     <!-- Mobile menu (visible only when open) with animation -->
@@ -110,6 +110,7 @@ onBeforeUnmount(() => {
       '-translate-y-10 opacity-0': !isMenuOpen,
     }"
   >
+    
     <span
       v-for="link in links"
       :key="link.href"
