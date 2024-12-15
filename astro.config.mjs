@@ -18,7 +18,7 @@ export default defineConfig({
   adapter: cloudflare({
     routes:{
       extend:{
-        include: "src/pages/**/*.astro"
+        include: ["src/pages/**/*.astro"]
 
       }
     }
