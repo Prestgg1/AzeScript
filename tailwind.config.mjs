@@ -2,6 +2,7 @@
 export default {
 	content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
 	theme: {
+	  	 
 	  extend: {
 		colors: {
 		  primary: {
@@ -23,7 +24,16 @@ export default {
 	  require('@tailwindcss/typography'),require('daisyui'),
 	],
 	daisyui: {
-		themes: false, // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
+		themes: [
+			{
+			  light: {
+				...require('daisyui/src/theming/themes')['light'],
+				primary: '#f97316',
+				'primary-focus': '#ea580c',
+				'primary-content': '#ffffff',
+			  },
+			},
+		  ], // false: only light + dark | true: all themes | array: specific themes like this ["light", "dark", "cupcake"]
 		darkTheme: "light", // name of one of the included themes for dark mode
 		base: true, // applies background color and foreground color for root element by default
 		styled: true, // include daisyUI colors and design decisions for all components

@@ -3,6 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import StarRating from '../../components/StarRating.astro';
 import CommentSection from '../../components/CommentSection.astro';
 import { scripts, comments } from '../../data/scripts';
+export const prerender = true;
 
 export function getStaticPaths() {
   return scripts.map((script) => ({
@@ -11,7 +12,9 @@ export function getStaticPaths() {
   }));
 }
 
+
 const { script } = Astro.props;
+console.log(script);
 ---
 
 <Layout title={`${script.title} - WebScript Market`}>

@@ -8,7 +8,6 @@ import vue from '@astrojs/vue';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://azescript.pages.dev/',
   output: 'server',
   integrations: [tailwind(), vue(),swup({
     preload:{
@@ -20,7 +19,6 @@ export default defineConfig({
     routes:{
       extend:{
         include: ["src/pages/**/*.astro"]
-
       }
     }
   })

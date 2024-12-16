@@ -14,122 +14,179 @@ const getFormFields = () => {
   switch (type) {
     case 'register':
       return [
-        { type: 'text' as const, name: 'firstName', label: 'Ad', required: true },
-        { type: 'text' as const, name: 'lastName', label: 'Soyad', required: true },
-        { type: 'email' as const, name: 'email', label: 'E-posta', required: true },
-        { type: 'password' as const, name: 'password', label: 'Şifre', required: true },
-        { type: 'password' as const, name: 'confirmPassword', label: 'Şifre Tekrar', required: true }
+        { type: 'text' as const, name: 'firstName', label: 'Ad'},
+        { type: 'text' as const, name: 'lastName', label: 'Soyad' },
+        { type: 'email' as const, name: 'email', label: 'E-posta'},
+        { type: 'password' as const, name: 'password', label: 'Şifre'},
+        { type: 'password' as const, name: 'confirmPassword', label: 'Şifre Tekrar', }
       ];
     case 'forgot-password':
       return [
-        { type: 'email' as const, name: 'email', label: 'E-posta', required: true }
+        { type: 'email' as const, name: 'email', label: 'E-posta' }
       ];
     default:
       return [
-        { type: 'email' as const, name: 'email', label: 'E-posta', required: true },
-        { type: 'password' as const, name: 'password', label: 'Şifre', required: true }
+        { type: 'email' as const, name: 'email', label: 'E-posta' },
+        { type: 'password' as const, name: 'password', label: 'Şifre' }
       ];
   }
 };
 
 const fields = getFormFields();
+
 ---
 
-<div class="max-w-md  w-full mx-auto">
-  <div class="bg-white rounded-lg shadow-md p-8">
-    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">{title}</h1>
-    
-    {description && (
-      <p class="text-gray-600 mb-6 text-center">{description}</p>
-    )}
+<div class="max-w-md w-full mx-auto">
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h1 class="card-title text-2xl justify-center mb-6">{title}</h1>
+      
+      {description && (
+        <p class="text-center text-base-content/70 mb-6">{description}</p>
+      )}
 
-    <form class="space-y-8 ">
-      <!-- Render form fields dynamically -->
-      {fields.map(field => (
-        <div>
-          <label for={field.name} class="block text-sm font-medium text-gray-700">
-            {field.label}
-          </label>
-          <input
-            type={field.type}
-            id={field.name}
-            name={field.name}
-            required={field.required}
-            class="mt-1 focus:outline-none block input w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-          />
-        </div>
-      ))}
-
-      <!-- Additional form elements based on type -->
-      {type === 'login' && (
-        <div class="flex items-center justify-between">
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              id="remember"
-              name="remember"
-              class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-            />
-            <label for="remember" class="ml-2 block text-sm text-gray-700">
-              Məni Xatırla
+      <form class="space-y-6" id={`${type}-form`}>
+        <!-- Form fields -->
+        {fields.map(field => (
+          <div class="form-control w-full">
+            <label for={field.name} class="label">
+              <span class="label-text">{field.label}</span>
             </label>
+            <input
+              type={field.type}
+              id={field.name}
+              name={field.name}
+              class="input input-bordered w-full"
+            />
+            <span class="label">
+              <span class="label-text-alt text-error" id={`${field.name}-error`}></span>
+            </span>
           </div>
+        ))}
 
-          <a href="/auth/forgot-password" class="text-sm text-primary-600 hover:text-primary-500">
-            Şifrəmi Unutdum
+        <!-- Additional form elements based on type -->
+        {type === 'login' && (
+          <div class="flex items-center justify-between">
+            <label class="label cursor-pointer">
+              <input
+                type="checkbox"
+                name="remember"
+                class="checkbox checkbox-primary"
+              />
+              <span class="label-text ml-2">Məni Xatırla</span>
+            </label>
+
+            <a href="/auth/forgot-password" class="link link-primary text-sm">
+              Şifrəmi unutdum
+            </a>
+          </div>
+        )}
+
+        {type === 'register' && (
+          <div class="form-control">
+            <label class="label justify-start items-center cursor-pointer">
+              <input
+                type="checkbox"
+                name="terms"
+                class="checkbox checkbox-primary"
+              />
+              <span class="label-text ml-2">
+                <a href="/terms" class="link link-primary">
+                  İstifadə şərtlərini
+                </a> qəbul edirəm
+              </span>
+            </label>
+            <span class="label">
+              <span class="label-text-alt text-error" id="terms-error"></span>
+            </span>
+          </div>
+        )}
+
+        <!-- Submit button -->
+        <button
+          type="submit"
+          class="btn btn-primary w-full"
+        >
+          {type === 'login' ? 'Giriş Yap' : 
+           type === 'register' ? 'Kayıt Ol' : 
+           'Şifre Sıfırlama Bağlantısı Gönder'}
+        </button>
+      </form>
+
+      <!-- Form footer links -->
+      <div class="text-center mt-6">
+        {type === 'login' ? (
+          <p class="text-sm text-base-content/70">
+            Hesabınız Yoxdu?
+            <a href="/auth/register" class="link link-primary">
+              Qeydiyatdan Keç
+            </a>
+          </p>
+        ) : type === 'register' ? (
+          <p class="text-sm text-base-content/70">
+            Hesabınız var ?
+            <a href="/auth/login" class="link link-primary">
+              Daxil ol
+            </a>
+          </p>
+        ) : (
+          <a href="/auth/login" class="link link-primary text-sm">
+            Giriş səhifəsinə gir
           </a>
-        </div>
-      )}
-
-      {type === 'register' && (
-        <div class="flex items-center">
-          <input
-            type="checkbox"
-            id="terms"
-            name="terms"
-            required
-            class="h-4 w-4 focus:outline-none rounded border-gray-300 text-primary-600 focus:ring-primary-500"
-          />
-          <label for="terms" class="ml-2 block text-sm text-gray-700">
-            <a href="/terms" class="text-primary-600 hover:text-primary-500">
-              İstifadə şərtlərini
-            </a> qəbul edirəm
-          </label>
-        </div>
-      )}
-
-      <!-- Submit button -->
-      <button
-        type="submit"
-        class="w-full bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
-      >
-        {type === 'login' ? 'Daxil Ol' : 
-         type === 'register' ? 'Qeydiyatdan keç' : 
-         'Şifrə Yeniləmə Linki Göndər'}
-      </button>
-    </form>
-
-    <!-- Form footer links -->
-    <div class="mt-6 text-center">
-      {type === 'login' ? (
-        <p class="text-sm text-gray-600">
-          Hesabınız yoxdu?
-          <a href="/auth/register" class="text-primary-600 hover:text-primary-500">
-            Qeydiyatdan keçin
-          </a>
-        </p>
-      ) : type === 'register' ? (
-        <p class="text-sm text-gray-600">
-          Hesabınız var?
-          <a href="/auth/login" class="text-primary-600 hover:text-primary-500">
-            Daxil Ol
-          </a>
-        </p>
-      ) : (
-        <a href="/auth/login" class="text-sm text-primary-600 hover:text-primary-500">
-          Giriş səhifəsinə qayıt
-        </a>
-      )}
+        )}
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  import { loginSchema, registerSchema, forgotPasswordSchema } from '../lib/validations/auth';
+
+  // Get the form element
+  const form = document.querySelector('form');
+  const formType = form?.id.split('-')[0];
+
+  // Handle form submission
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    // Clear previous error messages
+    document.querySelectorAll('[id$="-error"]').forEach(el => {
+      el.textContent = '';
+    });
+
+    // Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    try {
+      // Validate form data based on form type
+      switch (formType) {
+        case 'login':
+          await loginSchema.parseAsync(data);
+          break;
+        case 'register':
+          await registerSchema.parseAsync(data);
+          break;
+        case 'forgot-password':
+          await forgotPasswordSchema.parseAsync(data);
+          break;
+      }
+
+      // If validation passes, you can submit the form
+      console.log('Form data is valid:', data);
+      
+    } catch (error:any) {
+      // Handle validation errors
+      if (error.errors) {
+        error.errors.forEach((err:any) => {
+          const field = err.path[0];
+          const errorElement = document.getElementById(`${field}-error`);
+          if (errorElement) {
+            errorElement.textContent = err.message;
+          }
+        });
+      }
+    }
+  });
+</script>
