@@ -1,0 +1,34 @@
+---
+import DashboardLayout from '../../../components/dashboard/DashboardLayout.astro';
+import ScriptCard from '../../../components/ScriptCard.astro';
+
+// Mock user's scripts
+const userScripts = [
+  {
+    title: 'E-ticaret API',
+    description: 'REST API entegrasyonu için hazır script',
+    price: 299,
+    image: '/images/placeholder.svg',
+    isFree: false,
+  },
+  // Add more mock scripts as needed
+];
+---
+
+<DashboardLayout title="Scriptlerim">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-800">Scriptlerim</h1>
+    <a
+      href="/dashboard/scripts/new"
+      class="bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
+    >
+      Yeni Script Ekle
+    </a>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {userScripts.map(script => (
+      <ScriptCard {...script} />
+    ))}
+  </div>
+</DashboardLayout>

@@ -1,0 +1,20 @@
+---
+import DashboardLayout from '../../components/dashboard/DashboardLayout.astro';
+import ProfileForm from '../../components/dashboard/ProfileForm.vue';
+import PasswordForm from '../../components/dashboard/PasswordForm.vue';
+---
+
+<DashboardLayout title="Profil Ayarları">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Profil Ayarları</h1>
+
+  <!-- Profile Form -->
+  <div class="mb-8">
+    <ProfileForm client:load />
+  </div>
+
+  <!-- Password Change -->
+  <div class="border-t pt-6">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Şifre Değiştir</h2>
+    <PasswordForm client:load />
+  </div>
+</DashboardLayout>

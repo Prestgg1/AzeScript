@@ -1,14 +1,8 @@
 ---
+import LoginForm from '../../components/auth/LoginForm.vue';
 import Layout from '../../layouts/Layout.astro';
-import AuthForm from "../../components/AuthForm.astro";
 ---
 
 <Layout title="Daxil Ol - AzeScript Market">
-    <div class="flex-1">
-        <AuthForm 
-        type="login"
-        title="Daxil Ol"
-      />
-    </div>
-
+      <LoginForm client:load/>
 </Layout>

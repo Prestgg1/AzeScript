@@ -1,12 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import AuthForm from '../../components/AuthForm.astro';
+import RegisterForm from '../../components/auth/RegisterForm.vue';
 ---
 
 <Layout title="Kayıt Ol - WebScript Market">
- 
-  <AuthForm 
-    type="register"
-    title="Kayıt Ol"
-  />
+    <RegisterForm client:load/>
 </Layout>

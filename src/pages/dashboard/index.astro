@@ -1,0 +1,35 @@
+---
+import DashboardLayout from '../../components/dashboard/DashboardLayout.astro';
+
+// Mock user stats
+const stats = [
+  { label: 'Toplam Script', value: '5' },
+  { label: 'Toplam İndirme', value: '1.2K' },
+  { label: 'Ortalama Puan', value: '4.8' },
+  { label: 'Toplam Yorum', value: '24' },
+];
+---
+
+<DashboardLayout title="Kontrol Paneli">
+  <h1 class="text-2xl font-bold text-gray-800 mb-6">Kontrol Paneli</h1>
+  
+  <!-- Stats Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    {stats.map(stat => (
+      <div class="bg-orange-50 rounded-lg p-6">
+        <h3 class="text-gray-600 text-sm mb-2">{stat.label}</h3>
+        <p class="text-2xl font-bold text-primary-600">{stat.value}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="flex space-x-4">
+    <a
+      href="/dashboard/scripts/new"
+      class="inline-flex items-center space-x-2 bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 transition-colors"
+    >
+      <span>Script Paylaş</span>
+    </a>
+  </div>
+</DashboardLayout>
