@@ -44,12 +44,26 @@ const { title } = Astro.props;
 	}
 </style>
 
-		<script>
+	
+	</head>
+	<body class="min-h-screen bg-orange-50">
+		<Header />
+		<main
+			id="swup"
+			class="container transition-main min-h-[80vh] flex flex-col mx-auto px-4 py-8"
+		>
+			<slot />
+		</main>
+			
+		<Footer />
+		<script is:inline>
 			import SwupFragmentPlugin from "@swup/fragment-plugin";
 			import { Swup, SwupFadeTheme } from "@swup/astro/client";
 
 			const swup = new Swup({
+				
 				plugins: [
+
 					new SwupFadeTheme(),
 					new SwupFragmentPlugin({
 						rules: [
@@ -62,7 +76,7 @@ const { title } = Astro.props;
 							{
 								from: "/dashboard/(.*)",
 								to: "/dashboard/(.*)",
-								containers: ["#swup"],
+								containers: ["#dashboard"],
 								name: "admin-content",
 							},
 						],
@@ -70,16 +84,5 @@ const { title } = Astro.props;
 				],
 			});
 		</script>
-	</head>
-	<body class="min-h-screen bg-orange-50">
-		<Header />
-		<main
-			id="swup"
-			class="container transition-main min-h-[80vh] flex flex-col mx-auto px-4 py-8"
-		>
-			<slot />
-		</main>
-			
-		<Footer />
 	</body>
 </html>
