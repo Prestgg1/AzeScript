@@ -4,7 +4,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="form-control">
           <label class="label">
-            <span class="label-text">Mevcut Şifre</span>
+            <span class="label-text">İndiki Şifrə</span>
           </label>
           <input
             type="password"
@@ -19,7 +19,7 @@
         
         <div class="form-control">
           <label class="label">
-            <span class="label-text">Yeni Şifre</span>
+            <span class="label-text">Təzə Şifrə</span>
           </label>
           <input
             type="password"

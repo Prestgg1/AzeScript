@@ -1,7 +1,6 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
-
 interface Props {
 	title: string;
 }
@@ -17,22 +16,46 @@ const { title } = Astro.props;
 		<link rel="sitemap" href="/sitemap-index.xml" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<script>
+			import SwupFragmentPlugin from "@swup/fragment-plugin";
+			import { Swup } from "@swup/astro/client";
+
+			const swup = new Swup({
+				plugins: [
+					new SwupFragmentPlugin({
+						rules: [
+							{
+								from: "(.*)", // Herhangi bir sayfadan...
+								to: "(.*)", // ...herhangi bir sayfaya.
+								containers: ["#swup"], // Sadece #swup içeriğini değiştir
+								name: "main-content", // Stil vermek için bir isim
+							},
+							{
+								from: "/dashboard/(.*)",
+								to: "/dashboard/(.*)",
+								containers: ["#swup"],
+								name: "admin-content",
+							},
+						],
+					}),
+				],
+			});
+		</script>
 	</head>
 	<body class="min-h-screen bg-orange-50">
 		<Header />
 		<main
 			id="swup"
-			class="container swup-transition-fade min-h-[80vh]  flex flex-col mx-auto px-4 py-8"
+			class="container transition-main min-h-[80vh] flex flex-col mx-auto px-4 py-8"
 		>
-			
 			<slot />
 		</main>
+			
 		<Footer />
 	</body>
 </html>
 
 <style>
-	
 	html,
 	body {
 		margin: 0;

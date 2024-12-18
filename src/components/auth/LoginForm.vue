@@ -3,13 +3,13 @@
   <div class="max-w-md mx-auto w-full"  >
     <div class="card bg-base-100 shadow-xl">
       <div class="card-body">
-        <h1 class="card-title text-2xl justify-center mb-6">Giriş Yap</h1>
+        <h1 class="card-title text-2xl justify-center mb-6">Daxil ol</h1>
 
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <!-- Email Input -->
           <div class="form-control w-full">
             <label for="email" class="label">
-              <span class="label-text">E-posta</span>
+              <span class="label-text">E-poçt</span>
             </label>
             <input
               type="email"
@@ -26,7 +26,7 @@
           <!-- Password Input -->
           <div class="form-control w-full">
             <label for="password" class="label">
-              <span class="label-text">Şifre</span>
+              <span class="label-text">Şifrə</span>
             </label>
             <input
               type="password"
@@ -48,11 +48,11 @@
                 v-model="formData.rememberMe"
                 class="checkbox checkbox-primary"
               />
-              <span class="label-text ml-2">Beni hatırla</span>
+              <span class="label-text ml-2">Məni Xatırla</span>
             </label>
 
             <a href="/auth/forgot-password" class="link link-primary text-sm">
-              Şifremi unuttum
+              Şifrəmi unutdum
             </a>
           </div>
 
@@ -68,9 +68,9 @@
         <!-- Register Link -->
         <div class="text-center mt-6">
           <p class="text-sm text-base-content/70">
-            Hesabınız yok mu?
+            HHesabınız yoxdu?
             <a href="/auth/register" class="link link-primary">
-              Kayıt ol
+              Daxil ol
             </a>
           </p>
         </div>

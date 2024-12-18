@@ -1,0 +1,59 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+// Dashboard navigation items
+const navItems = [
+  { href: '/dashboard', text: 'Ümumi Baxış', icon: 'home' },
+  { href: '/dashboard/profile', text: 'Profil Parametrləri', icon: 'user' },
+  { href: '/dashboard/scripts', text: 'Scriptlərim', icon: 'code' },
+];
+
+// Get current path to highlight active nav item
+const currentPath = Astro.url.pathname;
+---
+
+<Layout title={`${title} - Dashboard`} >
+  <style>
+    #dashboard.is-changing {   transition: opacity 250ms; } #dashboard.is-animating {   opacity: 0; }
+  </style>
+  <div class="grid grid-cols-12 gap-6">
+    <!-- Sidebar -->
+    <aside class="col-span-12 md:col-span-3 lg:col-span-2">
+      <nav class="bg-white rounded-lg shadow-md p-4">
+        <ul class="space-y-2">
+          {navItems.map(item => (
+            <li>
+              <a
+              data-swup-link-to-fragment="#dashboard"
+                href={item.href}
+                class:list={[
+                  'flex items-center space-x-2 px-4 py-2 rounded-md transition-colors',
+                  currentPath === item.href
+                    ? 'bg-primary-500 text-white'
+                    : 'text-gray-600 hover:bg-orange-50'
+                ]}
+              >
+                <span>{item.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+
+<!--     <a href="" data-swup-link-to-fragment="#dashboard">Close</a> -->
+     
+    <div class="col-span-12 md:col-span-9 lg:col-span-10">
+      <div class="bg-white rounded-lg shadow-md p-6 dashboard"   data-swup-fragment="" >
+        <slot />
+      </div>
+    </div>
+  </div>
+</Layout>

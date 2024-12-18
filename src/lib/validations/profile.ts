@@ -1,36 +1,36 @@
 import { z } from 'zod';
 
-// Profile form validation schema
+// Profil forması üçün doğrulama sxemi
 export const profileSchema = z.object({
   name: z
     .string()
-    .min(2, 'Ad Soyad en az 2 karakter olmalıdır')
-    .max(50, 'Ad Soyad çok uzun'),
+    .min(2, 'Ad və Soyad ən az 2 simvol olmalıdır')
+    .max(50, 'Ad və Soyad çox uzundur'),
   email: z
     .string()
-    .min(1, 'E-posta adresi gereklidir')
-    .email('Geçerli bir e-posta adresi giriniz'),
+    .min(1, 'E-poçt ünvanı tələb olunur')
+    .email('Düzgün e-poçt ünvanı daxil edin'),
   bio: z
     .string()
-    .max(500, 'Biyografi çok uzun')
+    .max(500, 'Bioqrafiya çox uzundur')
     .optional(),
   location: z
     .string()
-    .max(100, 'Konum çok uzun')
+    .max(100, 'Məkan çox uzundur')
     .optional(),
   website: z
     .string()
-    .url('Geçerli bir URL giriniz')
+    .url('Düzgün URL daxil edin')
     .optional(),
 });
 
-// Password change validation schema
+// Şifrə dəyişdirmə üçün doğrulama sxemi
 export const passwordChangeSchema = z.object({
   currentPassword: z
     .string()
-    .min(1, 'Mevcut şifre gereklidir'),
+    .min(1, 'Cari şifrə tələb olunur'),
   newPassword: z
     .string()
-    .min(6, 'Yeni şifre en az 6 karakter olmalıdır')
-    .max(100, 'Yeni şifre çok uzun'),
+    .min(6, 'Yeni şifrə ən az 6 simvol olmalıdır')
+    .max(100, 'Yeni şifrə çox uzundur'),
 });

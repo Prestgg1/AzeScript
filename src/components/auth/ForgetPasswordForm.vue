@@ -3,17 +3,17 @@
   <div class="max-w-md mx-auto">
     <div class="card bg-base-100 shadow-xl">
       <div class="card-body">
-        <h1 class="card-title text-2xl justify-center mb-6">Şifremi Unuttum</h1>
+        <h1 class="card-title text-2xl justify-center mb-6">Şifrəmi Unuttum</h1>
         
         <p class="text-center text-base-content/70 mb-6">
-          E-posta adresinizi girin, size şifre sıfırlama bağlantısı gönderelim.
+          E-poçt adresinizi girin, sizə şifrə yeniləmə linki göndərək.
         </p>
 
         <form class="space-y-6" @submit.prevent="handleSubmit">
           <!-- Email Input -->
           <div class="form-control w-full">
             <label for="email" class="label">
-              <span class="label-text">E-posta</span>
+              <span class="label-text">E-poçt</span>
             </label>
             <input
               type="email"
@@ -39,7 +39,7 @@
         <!-- Login Link -->
         <div class="text-center mt-6">
           <a href="/auth/login" class="link link-primary text-sm">
-            Giriş sayfasına dön
+            Giriş səhifəsinə qayıt
           </a>
         </div>
       </div>
