@@ -6,12 +6,10 @@ import sitemap from '@astrojs/sitemap';
 import vue from '@astrojs/vue';
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
-  
-  integrations: [tailwind(), vue(),sitemap()],
+  integrations: [tailwind(), vue(), sitemap()],
   adapter: cloudflare({
-    routes:{
-      extend:{
+    routes: {
+      extend: {
         include: ["src/pages/**/*.astro"]
       }
     }

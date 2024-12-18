@@ -38,6 +38,12 @@ const { title } = Astro.props;
     transition: all 0.4s ease-in-out;
 }
 
+#swup {
+    transition: opacity 0.5s ease;
+}
+#swup.is-animating {
+    opacity: 0;
+}
 
 	html {
 		overscroll-behavior: none;
@@ -46,6 +52,7 @@ const { title } = Astro.props;
 
 	
 	</head>
+
 	<body class="min-h-screen bg-orange-50">
 		<Header />
 		<main
@@ -56,33 +63,56 @@ const { title } = Astro.props;
 		</main>
 			
 		<Footer />
-		<script is:inline>
-			import SwupFragmentPlugin from "@swup/fragment-plugin";
-			import { Swup, SwupFadeTheme } from "@swup/astro/client";
+		
 
-			const swup = new Swup({
-				
-				plugins: [
 
-					new SwupFadeTheme(),
-					new SwupFragmentPlugin({
-						rules: [
-							{
-								from: "(.*)", // Herhangi bir sayfadan...
-								to: "(.*)", // ...herhangi bir sayfaya.
-								containers: ["#swup"], // Sadece #swup içeriğini değiştir
-								name: "main-content", // Stil vermek için bir isim
-							},
-							{
-								from: "/dashboard/(.*)",
-								to: "/dashboard/(.*)",
-								containers: ["#dashboard"],
-								name: "admin-content",
-							},
-						],
-					}),
-				],
-			});
-		</script>
 	</body>
+
+
+	<script>
+		import SwupFragmentPlugin from "@swup/fragment-plugin";
+		import Swup from "swup";
+		const swup = new Swup({
+			plugins: [
+				new SwupFragmentPlugin({
+					rules: [
+				
+
+					{
+							from: "/dashboard",
+							to: "/dashboard/(.*)",
+							containers: ["#dashboard"],
+						},
+						{
+							from: "/dashboard/(.*)",
+							to: "/dashboard",
+							containers: ["#dashboard"],
+						},
+						{
+							from: "/dashboard/(.*)",
+							to: "/dashboard/(.*)",
+							containers: ["#dashboard"],
+						},
+						{
+							from: "/(.*)",
+							to: "/",
+							containers: ["#swup"],
+						},
+
+						{
+							from: "/(.*)",
+							to: "/(.*)",
+							containers: ["#swup"],
+						},
+						
+					
+					],
+				}),
+			],
+		});
+		
+		swup.hooks.on("page:load", function(){
+			console.log('Salam')
+		})
+	</script>
 </html>
