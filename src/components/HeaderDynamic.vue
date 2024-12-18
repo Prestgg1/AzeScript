@@ -85,17 +85,17 @@ onBeforeUnmount(() => {
 
     <!-- Desktop navigation links -->
     <div class="hidden md:flex justify-center items-center space-x-8">
-      <span
+      <a
         v-for="link in links"
         :key="link.href"
-        @click="swup.navigate(link.href)"
+        :href="link.href"
         :class="[
           'text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',
           isActive(link.href) ? 'text-orange-500' : ''
         ]"
       >
         {{ link.text }}
-      </span>
+    </a>
     
     </div>
 
