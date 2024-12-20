@@ -111,17 +111,17 @@ onBeforeUnmount(() => {
     }"
   >
     
-    <span
+    <a
       v-for="link in links"
       :key="link.href"
-      @click="swup.navigate(link.href);"
+      :href="link.href"
       :class="[
         'block text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',
         isActive(link.href) ? 'text-orange-500' : ''
       ]"
     >
       {{ link.text }}
-    </span>
+  </a>
   </div>
 </template>
 

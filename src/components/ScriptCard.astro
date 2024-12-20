@@ -17,9 +17,11 @@ const fallbackImage = "https://placehold.co/600x400/orange/white?text=Script+Ima
 <div class="bg-white rounded-lg shadow-md overflow-hidden transition-transform hover:scale-105">
   <!-- Script preview image -->
   <div class="w-full h-48">
-    <img 
+    <Image 
       src={image || fallbackImage} 
       alt={title}
+      height="200"
+      width="200"
       class="w-full h-full object-cover"
       onerror="this.onerror=null; this.src='https://placehold.co/600x400/orange/white?text=Script+Image'"
     />
