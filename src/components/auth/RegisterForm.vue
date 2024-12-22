@@ -40,6 +40,25 @@
             </span>
           </div>
 
+          <!-- User Name İnput -->
+          <div class="form-control w-full">
+            <label for="username" class="label">
+              <span class="label-text">İstifadəçi Adı</span>
+            </label>
+            <input
+              type="text"
+              id="username"
+              v-model="formData.username"
+              class="input input-bordered w-full"
+              :class="{ 'input-error': errors.username }"
+            />
+            <span class="label">
+              <span class="label-text-alt text-error">{{ errors.username }}</span>
+            </span>
+          </div>
+
+
+
           <!-- Email Input -->
           <div class="form-control w-full">
             <label for="email" class="label">
@@ -144,6 +163,7 @@ const formData = reactive({
   lastName: '',
   email: '',
   password: '',
+  username:'',
   confirmPassword: '',
   terms: false
 });
@@ -153,6 +173,7 @@ const errors = reactive({
   lastName: '',
   email: '',
   password: '',
+  username:'',
   confirmPassword: '',
   terms: ''
 });
@@ -170,7 +191,27 @@ const handleSubmit = async () => {
   try {
     const validatedData = await registerSchema.parseAsync(formData);
     console.log('Registration data is valid:', validatedData);
-    
+    const response = await fetch('https://azescript.koljan.net/api/users/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email:validatedData.email,
+        username: validatedData.username,
+        password: validatedData.password,
+        name: validatedData.firstName,
+        surname: validatedData.lastName,
+      }),
+    });
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.message || 'Bir hata oluştu, lütfen tekrar deneyin.');
+    }
+
+    console.log(result)
+    /* localStorage.setItem('token',) */
     // Here you would typically make an API call to register the user
     
   } catch (error) {

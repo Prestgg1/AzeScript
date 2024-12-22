@@ -22,6 +22,10 @@ export const registerSchema = z.object({
     .string()
     .min(2, 'Soyad ən az 2 simvol olmalıdır')
     .max(50, 'Soyad çox uzundur'),
+  username: z
+    .string()
+    .min(5, 'İstifadəçi adı ən az 5 simvol olmalıdır')
+    .max(50, 'İstifadəçi adı çox uzundur'),
   email: z
     .string()
     .min(1, 'E-poçt ünvanı tələb olunur')
