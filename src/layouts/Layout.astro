@@ -67,12 +67,15 @@ const { title } = Astro.props;
 		import Swup from "swup";
 		import SwupPreloadPlugin from "@swup/preload-plugin";
 		import { isActive } from "../lib/isActive";
+import SwupScriptsPlugin from "@swup/scripts-plugin";
 		const swup = new Swup({
 			containers: ["#swup", "#desktopNavigation"],
 			plugins: [
+				new SwupScriptsPlugin(),
 				new SwupPreloadPlugin({
-					preloadHoveredLinks: true,
-					preloadVisibleLinks: true,
+					
+					preloadHoveredLinks: false,
+					preloadVisibleLinks: true
 				}),
 				new SwupFragmentPlugin({
 					rules: [
@@ -114,15 +117,15 @@ const { title } = Astro.props;
 				.getElementById("loader")
 				?.classList.replace("hidden", "flex"),
 		);
-		swup.hooks.on("content:replace", () => {
-			const currentPath = window.location.pathname;
-			document.querySelectorAll("#desktopNavigation a").forEach((link) => {
-				link.classList.toggle(
-					"text-orange-500",
-					
-					isActive(currentPath,link.getAttribute("href"))
-				);
-			});
+		swup.hooks.on("visit:start", (visit) => {
+			document
+				.querySelectorAll("#desktopNavigation a")
+				.forEach((link) => {
+					link.classList.toggle(
+						"text-orange-500",
+						isActive(visit.to.url, link.getAttribute("href")),
+					);
+				});
 		});
 	</script>
 </html>
