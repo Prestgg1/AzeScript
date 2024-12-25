@@ -3,6 +3,7 @@
 
 import { isActive } from '../lib/isActive';
 import AuthBtn from './AuthBtn.astro';
+import MobileMenu from './MobileMenu.astro';
 
 
 const links = [
@@ -27,24 +28,25 @@ const pathname = Astro.originPathname
            <a
             v-for="link in links"
             href={link.href}
-            class:list={['text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',{ 'text-orange-500':isActive(pathname,link.href)}]}
+            class:list={['text-gray-600 cursor-pointer hover:text-primary-500 transition-colors',{ 'activelink':isActive(pathname,link.href)}]}
 >
             { link.text }
         </a>
          
         ))}
-    
+      
          
         
         </div>
     
-
+     
       <!--   <HeaderDynamic client:only /> -->
         
 
 
         <AuthBtn/>
       </div>
+      <MobileMenu/>
       <!-- Dinamik Header Bileşeni -->
    
     </div>

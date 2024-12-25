@@ -1,0 +1,27 @@
+---
+interface Props {
+  href: string;
+  text: string;
+}
+
+const { href, text } = Astro.props;
+const { pathname } = Astro.url;
+
+// Check if the current path matches the link
+const isActive = pathname === href || 
+                (href !== '/' && pathname.startsWith(href));
+
+---
+
+<a
+  href={href}
+  class:list={[
+    'transition-colors',
+    isActive 
+      ? 'activelink' 
+      : 'text-gray-600 hover:text-primary-500'
+  ]}
+  data-swup-link
+>
+  {text}
+</a>

@@ -17,7 +17,11 @@ const { title } = Astro.props;
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
-		<style>
+		<style is:global>
+			.activelink{
+				color: #EA580C;
+				font-weight: bold;
+			}
 			html,
 			body {
 				margin: 0;
@@ -122,10 +126,20 @@ import SwupScriptsPlugin from "@swup/scripts-plugin";
 				.querySelectorAll("#desktopNavigation a")
 				.forEach((link) => {
 					link.classList.toggle(
-						"text-orange-500",
+						"activelink",
 						isActive(visit.to.url, link.getAttribute("href")),
 					);
 				});
+			document
+				.querySelectorAll("#mobile-menu nav a")
+				.forEach((link) => {
+					link.classList.toggle(
+						"activelink",
+						isActive(visit.to.url, link.getAttribute("href")),
+					);
+				});
+		
 		});
 	</script>
 </html>
+
