@@ -2,144 +2,136 @@
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 interface Props {
-	title: string;
+    title: string;
 }
 const { title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="az">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="sitemap" href="/sitemap-index.xml" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
 
-		<style is:global>
-			.activelink{
-				color: #EA580C;
-				font-weight: bold;
-			}
-			html,
-			body {
-				margin: 0;
-				width: 100%;
-			}
+        <style is:global>
+            .activelink {
+                color: #ea580c;
+                font-weight: bold;
+            }
+            html,
+            body {
+                margin: 0;
+                width: 100%;
+            }
 
-			html.is-animating .swup-transition-fade {
-				opacity: 0;
-				transform: translateY(10px) scale(0.95) rotate(-2deg);
-				transition: all 0.4s ease-in-out;
-			}
+            html.is-animating .swup-transition-fade {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95) rotate(-2deg);
+                transition: all 0.4s ease-in-out;
+            }
 
-			.swup-transition-fade {
-				opacity: 1;
-				transform: translateY(0) scale(1) rotate(0);
-				transition: all 0.4s ease-in-out;
-			}
+            .swup-transition-fade {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0);
+                transition: all 0.4s ease-in-out;
+            }
 
-			#swup {
-				transition: opacity 0.5s ease;
-			}
-			#swup.is-animating {
-				opacity: 0;
-			}
+            #swup {
+                transition: opacity 0.5s ease;
+            }
+            #swup.is-animating {
+                opacity: 0;
+            }
 
-			html {
-				overscroll-behavior: none;
-			}
-		</style>
-	</head>
+            html {
+                overscroll-behavior: none;
+            }
+        </style>
+    </head>
 
-	<body class="min-h-screen flex flex-col h-full flex-1 bg-orange-50">
-		<Header />
+    <body class="min-h-screen flex flex-col h-full flex-1 bg-orange-50">
+        <Header />
 
-		<main
-			id="swup"
-			class="container transition-main flex-1 flex flex-col px-4 py-8"
-		>
-			<slot />
-		</main>
+        <main
+            id="swup"
+            class="container transition-main flex-1 flex flex-col px-4 py-8"
+        >
+            <slot />
+        </main>
 
-		<Footer />
-	</body>
+        <Footer />
+    </body>
 
-	<script>
-		import SwupFragmentPlugin from "@swup/fragment-plugin";
-		import Swup from "swup";
-		import SwupPreloadPlugin from "@swup/preload-plugin";
-		import { isActive } from "../lib/isActive";
-import SwupScriptsPlugin from "@swup/scripts-plugin";
-		const swup = new Swup({
-			containers: ["#swup", "#desktopNavigation"],
-			plugins: [
-				new SwupScriptsPlugin(),
-				new SwupPreloadPlugin({
-					
-					preloadHoveredLinks: false,
-					preloadVisibleLinks: true
-				}),
-				new SwupFragmentPlugin({
-					rules: [
-						{
-							from: "/dashboard",
-							to: "/dashboard/(.*)",
-							containers: ["#dashboard"],
-						},
-						{
-							from: "/dashboard/(.*)",
-							to: "/dashboard",
-							containers: ["#dashboard"],
-						},
-						{
-							from: "/dashboard/(.*)",
-							to: "/dashboard/(.*)",
-							containers: ["#dashboard"],
-						},
-						{
-							from: "/(.*)",
-							to: "/",
-							containers: ["#swup"],
-						},
+    <script>
+        import SwupFragmentPlugin from "@swup/fragment-plugin";
+        import Swup from "swup";
+        import SwupPreloadPlugin from "@swup/preload-plugin";
+        import { isActive } from "../lib/isActive";
+        import SwupScriptsPlugin from "@swup/scripts-plugin";
+        const swup = new Swup({
+            containers: ["#swup", "#desktopNavigation"],
+            plugins: [
+                new SwupScriptsPlugin(),
+                new SwupPreloadPlugin({
+                    preloadHoveredLinks: false,
+                    preloadVisibleLinks: true,
+                }),
+                new SwupFragmentPlugin({
+                    rules: [
+                        {
+                            from: "/dashboard",
+                            to: "/dashboard/(.*)",
+                            containers: ["#dashboard"],
+                        },
+                        {
+                            from: "/dashboard/(.*)",
+                            to: "/dashboard",
+                            containers: ["#dashboard"],
+                        },
+                        {
+                            from: "/dashboard/(.*)",
+                            to: "/dashboard/(.*)",
+                            containers: ["#dashboard"],
+                        },
+                        {
+                            from: "/(.*)",
+                            to: "/",
+                            containers: ["#swup"],
+                        },
 
-						{
-							from: "/(.*)",
-							to: "/(.*)",
-							containers: ["#swup"],
-						},
-					],
-				}),
-			],
-		});
-		swup.hooks.on("page:preload", (_visit, { page }) =>
-			console.log("preloaded:", page),
-		);
-		swup.hooks.on("visit:start", () =>
-			document
-				.getElementById("loader")
-				?.classList.replace("hidden", "flex"),
-		);
-		swup.hooks.on("visit:start", (visit) => {
-			document
-				.querySelectorAll("#desktopNavigation a")
-				.forEach((link) => {
-					link.classList.toggle(
-						"activelink",
-						isActive(visit.to.url, link.getAttribute("href")),
-					);
-				});
-			document
-				.querySelectorAll("#mobile-menu nav a")
-				.forEach((link) => {
-					link.classList.toggle(
-						"activelink",
-						isActive(visit.to.url, link.getAttribute("href")),
-					);
-				});
-		
-		});
-	</script>
+                        {
+                            from: "/(.*)",
+                            to: "/(.*)",
+                            containers: ["#swup"],
+                        },
+                    ],
+                }),
+            ],
+        });
+        swup.hooks.on("visit:start", () =>
+            document
+                .getElementById("loader")
+                ?.classList.replace("hidden", "flex"),
+        );
+        swup.hooks.on("visit:start", (visit) => {
+            document
+                .querySelectorAll("#desktopNavigation a")
+                .forEach((link) => {
+                    link.classList.toggle(
+                        "activelink",
+                        isActive(visit.to.url, link.getAttribute("href")),
+                    );
+                });
+            document.querySelectorAll("#mobile-menu nav a").forEach((link) => {
+                link.classList.toggle(
+                    "activelink",
+                    isActive(visit.to.url, link.getAttribute("href")),
+                );
+            });
+        });
+    </script>
 </html>
-

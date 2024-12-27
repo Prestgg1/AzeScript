@@ -1,104 +1,106 @@
 ---
-import NavLink from './NavLink.astro';
-const navigationLinks = [
-  { href: '/', text: 'Ana Səhifə' },
-  { href: '/scripts/', text: 'Scriptlər' },
-  { href: '/about/', text: 'Haqqımızda' },
-  { href: '/contact/', text: 'Əlaqə' },
-];
+import NavLink from "./NavLink.astro";
+
+import { links } from "../lib/consts";
+import { title } from "../lib/consts";
 ---
 
 <!-- Mobile menu button -->
 <button
-  type="button"
-  class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary-500"
-  aria-controls="mobile-menu"
-  aria-expanded="false"
-  id="mobile-menu-button"
+    type="button"
+    class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-600 hover:text-primary-500"
+    aria-controls="mobile-menu"
+    aria-expanded="false"
+    id="mobile-menu-button"
 >
-  <span class="sr-only">Open main menu</span>
-  <svg
-    class="h-6 w-6"
-    fill="none"
-    viewBox="0 0 24 24"
-    stroke="currentColor"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M4 6h16M4 12h16M4 18h16"
-    />
-  </svg>
+    <span class="sr-only">Open main menu</span>
+    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+    </svg>
 </button>
 
 <!-- Mobile menu overlay -->
-<div 
-  class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" 
-  id="mobile-menu-overlay"
+<div
+    class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"
+    id="mobile-menu-overlay"
 >
 </div>
 
 <!-- Mobile menu panel -->
-<div 
-  class="fixed top-0 right-0 w-full h-full  flex flex-col  bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out"
-  id="mobile-menu"
+<div
+    class="fixed top-0 right-0 w-full h-full flex flex-col bg-white z-50 transform translate-x-full transition-transform duration-300 ease-in-out"
+    id="mobile-menu"
 >
-  <div class="p-4 flex-1 flex flex-col">
-    <div class="flex justify-between items-center mb-8">
-      <h2 class="text-xl font-bold text-primary-600">WebScript Market</h2>
-      <button 
-        class="p-2 rounded-md text-gray-600 hover:text-primary-500"
-        id="mobile-menu-close"
-      >
-        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-        </svg>
-      </button>
+    <div class="p-4 flex-1 flex flex-col">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-xl font-bold text-primary-600">{title}</h2>
+            <button
+                class="p-2 rounded-md text-gray-600 hover:text-primary-500"
+                id="mobile-menu-close"
+            >
+                <svg
+                    class="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+            </button>
+        </div>
+
+        <nav
+            class="space-y-4 flex-1 bg-white flex flex-col justify-center items-center"
+        >
+            {
+                links.map((link) => (
+                    <NavLink {...link} class="block text-lg py-2" />
+                ))
+            }
+        </nav>
+        <div class="pt-4 border-t">
+            <a
+                href="/auth/login"
+                class="w-full btn btn-primary text-white hover:bg-primary-600"
+            >
+                Daxil Ol
+            </a>
+            <a
+                href="/auth/register"
+                class="w-full mt-3 btn btn-outline border-primary-500 text-primary-500 hover:bg-primary-500"
+            >
+                Qeydiyyata başla
+            </a>
+        </div>
     </div>
-
-    <nav class="space-y-4 flex-1 bg-white flex flex-col justify-center items-center">
-      {navigationLinks.map((link) => (
-        <NavLink {...link} class="block text-lg py-2" />
-      ))}
-      
-
-    </nav>
-    <div class="pt-4 border-t">
-        <a
-          href="/auth/login"
-          class="block w-full text-center py-2 px-4 rounded-md bg-primary-500 text-white hover:bg-primary-600 mb-2"
-        >
-          Daxil Ol
-        </a>
-        <a
-          href="/auth/register"
-          class="block w-full text-center py-2 px-4 rounded-md border border-primary-500 text-primary-500 hover:bg-primary-50"
-        >
-          Qeydiyyata başla
-        </a>
-      </div>
-  </div>
 </div>
 
 <script>
-  const button = document.getElementById('mobile-menu-button');
-  const menu = document.getElementById('mobile-menu');
-  const overlay = document.getElementById('mobile-menu-overlay');
-  const closeButton = document.getElementById('mobile-menu-close');
+    const button = document.getElementById("mobile-menu-button");
+    const menu = document.getElementById("mobile-menu");
+    const overlay = document.getElementById("mobile-menu-overlay");
+    const closeButton = document.getElementById("mobile-menu-close");
 
-  function toggleMenu(show: boolean) {
-    const expanded = show ? 'true' : 'false';
-    button?.setAttribute('aria-expanded', expanded);
-    menu?.classList.toggle('translate-x-full', !show);
-    overlay?.classList.toggle('hidden', !show);
-    document.body.style.overflow = show ? 'hidden' : '';
-  }
+    function toggleMenu(show: boolean) {
+        const expanded = show ? "true" : "false";
+        button?.setAttribute("aria-expanded", expanded);
+        menu?.classList.toggle("translate-x-full", !show);
+        overlay?.classList.toggle("hidden", !show);
+        document.body.style.overflow = show ? "hidden" : "";
+    }
 
-  button?.addEventListener('click', () => toggleMenu(true));
-  closeButton?.addEventListener('click', () => toggleMenu(false));
-  document.querySelectorAll('#mobile-menu a').forEach(e=>{
-    e.addEventListener('click', () => toggleMenu(false));
-  })
-  overlay?.addEventListener('click', () => toggleMenu(false));
+    button?.addEventListener("click", () => toggleMenu(true));
+    closeButton?.addEventListener("click", () => toggleMenu(false));
+    document.querySelectorAll("#mobile-menu a").forEach((e) => {
+        e.addEventListener("click", () => toggleMenu(false));
+    });
+    overlay?.addEventListener("click", () => toggleMenu(false));
 </script>

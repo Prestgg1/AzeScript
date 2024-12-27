@@ -1,9 +1,9 @@
 ---
-import DashboardLayout from '../../../layouts/DashboardLayout.astro';
-import ScriptForm from '../../../components/dashboard/ScriptForm.vue';
+import DashboardLayout from "../../../layouts/DashboardLayout.astro";
+import ScriptForm from "../../../components/dashboard/ScriptForm.vue";
 ---
 
 <DashboardLayout title="Yeni Script Əlavə Et">
-  <h1 class="text-2xl font-bold text-gray-800 mb-6">Yeni Script Əlavə Et</h1>
-  <ScriptForm client:load />
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Yeni Script Əlavə Et</h1>
+    <ScriptForm client:only="vue" />
 </DashboardLayout>
