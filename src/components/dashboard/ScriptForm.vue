@@ -86,7 +86,6 @@
                 <span class="label-text">Təsvir</span>
             </label>
 
-            <Button>Click me</Button>
             <QuillEditor
                 v-model="formData.description"
                 :class="{ 'textarea-error': errors.description }"
@@ -134,7 +133,6 @@
 <script setup>
 import { ref, reactive } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
-import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import { scriptSchema } from "../../lib/validations/script";
 
 const categories = [

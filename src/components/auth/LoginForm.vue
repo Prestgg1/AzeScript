@@ -8,68 +8,24 @@
                     Daxil ol
                 </h1>
                 <form class="space-y-6" @submit.prevent="handleSubmit">
-                    <!-- Email Input -->
-                    <div class="form-control w-full">
-                        <label for="email" class="label">
-                            <span class="label-text">E-poçt</span>
-                        </label>
-                        <input
-                            type="email"
-                            id="email"
-                            v-model="formData.email"
-                            class="input input-bordered w-full"
-                            :class="{ 'input-error': errors.email }"
-                        />
-                        <span class="label">
-                            <span class="label-text-alt text-error">{{
-                                errors.email
-                            }}</span>
-                        </span>
-                    </div>
-
-                    <!-- Password Input -->
-                    <div class="form-control w-full">
-                        <label for="password" class="label">
-                            <span class="label-text">Şifrə</span>
-                        </label>
-                        <input
-                            type="password"
-                            id="password"
-                            v-model="formData.password"
-                            class="input input-bordered w-full"
-                            :class="{ 'input-error': errors.password }"
-                        />
-                        <span class="label">
-                            <span class="label-text-alt text-error">{{
-                                errors.password
-                            }}</span>
-                        </span>
-                    </div>
-
+                    <!--? Email Input -->
+                    <InputField id="email" label="E-poçt" v-model="formData.email" :error="errors.email" type="email" />
+                    <!--? Password Input -->
+                    <InputField id="password" label="Şifrə" v-model="formData.password" :error="errors.password"
+                        type="password" />
                     <!-- Remember Me & Forgot Password -->
                     <div class="flex items-center justify-between">
                         <label class="label cursor-pointer">
-                            <input
-                                type="checkbox"
-                                v-model="formData.rememberMe"
-                                class="checkbox checkbox-primary"
-                            />
+                            <input type="checkbox" v-model="formData.rememberMe" class="checkbox checkbox-primary" />
                             <span class="label-text ml-2">Məni Xatırla</span>
                         </label>
 
-                        <a
-                            href="/auth/forgot-password"
-                            class="link link-primary text-sm"
-                        >
+                        <a href="/auth/forgot-password" class="link link-primary text-sm">
                             Şifrəmi unutdum
                         </a>
                     </div>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary w-full"
-                        :disabled="isSubmitting"
-                    >
+                    <button type="submit" class="btn btn-primary w-full" :disabled="isSubmitting">
                         {{ isSubmitting ? "Giriş yapılıyor..." : "Giriş Yap" }}
                     </button>
                 </form>
@@ -105,6 +61,7 @@ const show = () => {
 };
 
 import { loginSchema } from "../../lib/validations/auth";
+import InputField from "./InputField.vue";
 
 const isSubmitting = ref(false);
 
