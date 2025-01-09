@@ -6,6 +6,7 @@ import AuthBtn from "./AuthBtn.astro";
 import MobileMenu from "./MobileMenu.astro";
 import { links } from "../lib/consts";
 const pathname = Astro.originPathname;
+import IsLogin from "./auth/IsLogin.vue";
 ---
 
 <nav class="bg-white relative shadow-lg">
@@ -40,9 +41,7 @@ const pathname = Astro.originPathname;
                     }
                 </div>
 
-                <!--   <HeaderDynamic client:only /> -->
-
-                <AuthBtn />
+                <IsLogin client:only> <AuthBtn /> </IsLogin>
             </div>
             <MobileMenu />
             <!-- Dinamik Header Bileşeni -->
@@ -50,3 +49,6 @@ const pathname = Astro.originPathname;
         <!-- Buraya Mobile Menu eklenicek -->
     </div>
 </nav>
+<script>
+    console.log(localStorage.getItem("token"));
+</script>
