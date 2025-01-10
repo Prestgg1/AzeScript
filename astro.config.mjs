@@ -10,9 +10,9 @@ export default defineConfig({
   output: "server",
   integrations: [
     tailwind(),
-    vue({ appEntrypoint: "/src/pages/_app" , devtools: true,  }),
+    vue({ appEntrypoint: "/src/pages/_app", devtools: true }),
     sitemap(),
-    
+
     purgecss({
       content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
       safelist: ["class-name", "other-class-name"],

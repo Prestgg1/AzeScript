@@ -28,6 +28,7 @@
     "astro-purgecss": "^5.0.0",
     "astro-social-share": "^2.1.0",
     "axios": "^1.7.9",
+    "js-cookie": "^3.0.5",
     "pinia": "^2.3.0",
     "primevue": "^4.2.5",
     "swup": "^4.8.1",
