@@ -20,11 +20,36 @@ const currentPath = Astro.url.pathname;
 
 <Layout title={`${title} - Dashboard`}>
     <style>
-        #dashboard.is-changing {
-            transition: opacity 250ms;
+        #dashboard {
+            animation-duration: 400ms;
+            transition: opacity 400ms ease;
         }
-        #dashboard.is-animating {
+        #dashboard.is-changing {
             opacity: 0;
+        }
+        .nav-link {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ea580c;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active {
+            color: #ea580c;
+            background: #fff1e6;
+        }
+        .nav-link.active::after {
+            width: 100%;
         }
     </style>
     <div class="grid grid-cols-12 gap-6">
@@ -38,10 +63,10 @@ const currentPath = Astro.url.pathname;
                                 <a
                                     href={item.href}
                                     class:list={[
-                                        "flex items-center space-x-2 px-4 py-2 rounded-md transition-colors",
+                                        "nav-link flex items-center space-x-2 px-4 py-2 rounded-md",
                                         currentPath === item.href
-                                            ? "bg-primary-500 text-white"
-                                            : "text-gray-600 hover:bg-orange-50",
+                                            ? "active"
+                                            : "text-gray-600 hover:text-orange-600",
                                     ]}
                                 >
                                     <span>{item.text}</span>
@@ -52,8 +77,8 @@ const currentPath = Astro.url.pathname;
                 </ul>
             </nav>
         </aside>
-        <!-- Main Content -->
 
+        <!-- Main Content -->
         <div class="col-span-12 md:col-span-9 lg:col-span-10">
             <div
                 class="bg-white rounded-lg shadow-md p-6 dashboard"

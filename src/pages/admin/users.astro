@@ -1,0 +1,249 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+
+// Mock users data
+const users = [
+    {
+        id: 1,
+        name: "Ahmet Yılmaz",
+        email: "ahmet@example.com",
+        role: "Kullanıcı",
+        status: "Aktif",
+        joinDate: "2024-01-15",
+    },
+    {
+        id: 2,
+        name: "Mehmet Kaya",
+        email: "mehmet@example.com",
+        role: "Admin",
+        status: "Aktif",
+        joinDate: "2024-02-01",
+    },
+    {
+        id: 3,
+        name: "Ayşe Demir",
+        email: "ayse@example.com",
+        role: "Kullanıcı",
+        status: "Beklemede",
+        joinDate: "2024-03-10",
+    },
+];
+---
+
+<AdminLayout title="Kullanıcılar">
+    <div class="space-y-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Kullanıcılar</h1>
+            <div class="flex space-x-3">
+                <div class="relative">
+                    <input
+                        type="text"
+                        placeholder="Kullanıcı ara..."
+                        class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
+                    />
+                    <svg
+                        class="absolute left-3 top-2.5 h-5 w-5 text-gray-400"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        ></path>
+                    </svg>
+                </div>
+                <button
+                    class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors flex items-center"
+                >
+                    <svg
+                        class="w-5 h-5 mr-2"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                        ></path>
+                    </svg>
+                    Yeni Kullanıcı
+                </button>
+            </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Kullanıcı
+                        </th>
+                        <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Rol
+                        </th>
+                        <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Durum
+                        </th>
+                        <th
+                            scope="col"
+                            class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                        >
+                            Katılım Tarihi
+                        </th>
+                        <th scope="col" class="relative px-6 py-3">
+                            <span class="sr-only">Düzenle</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {
+                        users.map((user) => (
+                            <tr class="hover:bg-gray-50">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <div class="flex-shrink-0 h-10 w-10">
+                                            <div class="h-10 w-10 rounded-full bg-orange-100 flex items-center justify-center">
+                                                <span class="text-orange-600 font-medium">
+                                                    {user.name[0]}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-gray-900">
+                                                {user.name}
+                                            </div>
+                                            <div class="text-sm text-gray-500">
+                                                {user.email}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class:list={[
+                                            "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
+                                            user.role === "Admin"
+                                                ? "bg-purple-100 text-purple-800"
+                                                : "bg-gray-100 text-gray-800",
+                                        ]}
+                                    >
+                                        {user.role}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span
+                                        class:list={[
+                                            "px-2 inline-flex text-xs leading-5 font-semibold rounded-full",
+                                            user.status === "Aktif"
+                                                ? "bg-green-100 text-green-800"
+                                                : "bg-yellow-100 text-yellow-800",
+                                        ]}
+                                    >
+                                        {user.status}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    {new Date(user.joinDate).toLocaleDateString(
+                                        "tr-TR"
+                                    )}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                    <button class="text-orange-600 hover:text-orange-900">
+                                        Düzenle
+                                    </button>
+                                </td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="flex items-center justify-between">
+            <div class="flex-1 flex justify-between sm:hidden">
+                <button class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    Önceki
+                </button>
+                <button class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    Sonraki
+                </button>
+            </div>
+            <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+                <div>
+                    <p class="text-sm text-gray-700">
+                        Toplam <span class="font-medium">20</span> kullanıcıdan{" "}
+                        <span class="font-medium">1</span> ile{" "}
+                        <span class="font-medium">10</span> arası gösteriliyor
+                    </p>
+                </div>
+                <div>
+                    <nav
+                        class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
+                        aria-label="Pagination"
+                    >
+                        <button class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Önceki</span>
+                            <svg
+                                class="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                        <button
+                            aria-current="page"
+                            class="z-10 bg-orange-50 border-orange-500 text-orange-600 relative inline-flex items-center px-4 py-2 border text-sm font-medium"
+                        >
+                            1
+                        </button>
+                        <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                            2
+                        </button>
+                        <button class="bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium">
+                            3
+                        </button>
+                        <button class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                            <span class="sr-only">Sonraki</span>
+                            <svg
+                                class="h-5 w-5"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                                fill="currentColor"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                    clip-rule="evenodd"
+                                />
+                            </svg>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</AdminLayout> 

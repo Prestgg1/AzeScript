@@ -1,0 +1,83 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Ayarlar">
+    <div class="space-y-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Ayarlar</h1>
+            <button class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors">
+                Değişiklikleri Kaydet
+            </button>
+        </div>
+
+        <!-- Settings Sections -->
+        <div class="space-y-6">
+            <!-- General Settings -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Genel Ayarlar</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Site Adı</label>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="AzeScript" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Site Açıklaması</label>
+                        <textarea class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" rows="3">Script paylaşım platformu</textarea>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">İletişim Email</label>
+                        <input type="email" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="info@azescript.com" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Script Settings -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Script Ayarları</h2>
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700">Otomatik Script Onayı</label>
+                            <p class="text-sm text-gray-500">Yeni eklenen scriptler otomatik onaylansın</p>
+                        </div>
+                        <button type="button" class="bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2" role="switch" aria-checked="false">
+                            <span class="translate-x-0 pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Maksimum Dosya Boyutu (MB)</label>
+                        <input type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="10" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">İzin Verilen Dosya Tipleri</label>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value=".js, .php, .py, .html, .css" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Settings -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">Email Ayarları</h2>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">SMTP Sunucu</label>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="smtp.example.com" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">SMTP Port</label>
+                        <input type="number" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="587" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">SMTP Kullanıcı Adı</label>
+                        <input type="text" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="user@example.com" />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">SMTP Şifre</label>
+                        <input type="password" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" value="********" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</AdminLayout> 

@@ -1,0 +1,75 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+
+// Mock categories data
+const categories = [
+    {
+        id: 1,
+        name: "API",
+        description: "API ve entegrasyon scriptleri",
+        scriptCount: 25,
+        color: "blue",
+    },
+    {
+        id: 2,
+        name: "Template",
+        description: "Hazır şablonlar ve temalar",
+        scriptCount: 42,
+        color: "purple",
+    },
+    {
+        id: 3,
+        name: "SEO",
+        description: "SEO ve optimizasyon araçları",
+        scriptCount: 18,
+        color: "green",
+    },
+    {
+        id: 4,
+        name: "Utility",
+        description: "Yardımcı araçlar ve scriptler",
+        scriptCount: 31,
+        color: "orange",
+    }
+];
+---
+
+<AdminLayout title="Kategoriler">
+    <div class="space-y-6">
+        <div class="flex justify-between items-center">
+            <h1 class="text-2xl font-bold text-gray-800">Kategoriler</h1>
+            <button class="bg-orange-500 text-white px-4 py-2 rounded-lg hover:bg-orange-600 transition-colors flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                </svg>
+                Yeni Kategori
+            </button>
+        </div>
+
+        <!-- Categories Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((category) => (
+                <div class="bg-white rounded-lg shadow-md p-6">
+                    <div class="flex justify-between items-start mb-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">{category.name}</h3>
+                            <p class="mt-1 text-sm text-gray-500">{category.description}</p>
+                        </div>
+                        <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-${category.color}-100 text-${category.color}-800`}>
+                            {category.scriptCount} Script
+                        </span>
+                    </div>
+                    
+                    <div class="flex space-x-2">
+                        <button class="flex-1 bg-orange-100 text-orange-600 px-4 py-2 rounded-lg hover:bg-orange-200 transition-colors text-sm font-medium">
+                            Düzenle
+                        </button>
+                        <button class="flex-1 bg-red-100 text-red-600 px-4 py-2 rounded-lg hover:bg-red-200 transition-colors text-sm font-medium">
+                            Sil
+                        </button>
+                    </div>
+                </div>
+            ))}
+        </div>
+    </div>
+</AdminLayout> 

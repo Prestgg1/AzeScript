@@ -8,6 +8,10 @@ import purgecss from "astro-purgecss";
 // https://astro.build/config
 export default defineConfig({
   output: "server",
+  prefetch: {
+    defaultStrategy: 'viewport',
+    prefetchAll: true
+  },
   integrations: [
     tailwind(),
     vue({ appEntrypoint: "/src/pages/_app" }),
