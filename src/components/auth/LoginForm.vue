@@ -33,7 +33,7 @@
                         class="btn btn-primary w-full"
                         :disabled="isPending"
                     >
-                        {{ isPending ? "Giriş yapılıyor..." : "Giriş Yap" }}
+                        {{ isPending ? "Daxil olunur..." : "Daxil Ol" }}
                     </button>
                 </form>
 

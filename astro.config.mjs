@@ -10,7 +10,7 @@ export default defineConfig({
   output: "server",
   integrations: [
     tailwind(),
-    vue({ appEntrypoint: "/src/pages/_app", devtools: true }),
+    vue({ appEntrypoint: "/src/pages/_app" }),
     sitemap(),
 
     purgecss({

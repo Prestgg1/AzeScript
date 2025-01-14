@@ -1,8 +1,11 @@
-export const fetcher = async (url, options) => {
-    const response = await fetch(url, options);
-    const data = await response.json();
-    if (!response.ok) {
-        throw new Error(data.message || "Bir hata oluştu.");
-    }
-    return data;
-};
+import { API_URL } from "../lib/consts";
+import axios from "axios";
+export async function poster(data, api) {
+  const req = await axios.post(API_URL + api, data);
+  return req.data;
+}
+
+export async function fetcher(api) {
+  const req = await axios.get(API_URL + api);
+  return req.data;
+}

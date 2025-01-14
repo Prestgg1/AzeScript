@@ -1,29 +1,8 @@
 ---
-import { API_URL } from "../../lib/consts";
-import axios from "axios";
-type Auth_Token = {
-    token: boolean;
-};
+import Profile from "./Profile.vue";
+import AuthBtn from "../AuthBtn.astro";
 
-if (Astro.cookies.has("User")) {
-    axios(API_URL + "/users/user", {
-        headers: {
-            Authorization: `Bearer ${Astro.cookies.get("User")}`,
-        },
-    });
-}
+const { user } = Astro.locals;
 ---
 
-<slot />
-<!-- <script>
-    console.log(getUser);
-    import { ref } from "vue";
-    import { onMounted } from "vue";
-    const user = ref(null);
-    onMounted(() => {
-        console.log(localStorage.getItem("token"));
-        if (localStorage.getItem("token")) {
-            user.value = localStorage.getItem("token");
-        }
-    });
-</script> -->
+{!!!user ? <AuthBtn /> : <Profile client:load user={user} />}
