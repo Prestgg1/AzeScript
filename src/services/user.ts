@@ -10,3 +10,11 @@ export async function UserApi() {
   });
   return req.data;
 }
+
+export async function UserPoster(api: string, data: any) {
+  const req = await axios.post(API_URL + api, {
+    headers: { Authorization: `Bearer ${token}` },
+    data,
+  });
+  return req;
+}

@@ -87,9 +87,10 @@
             </label>
 
             <QuillEditor
-                v-model="formData.description"
-                :class="{ 'textarea-error': errors.description }"
+                v-model:content="formData.description"
+                contentType="html"
             />
+
             <span class="label">
                 <span class="label-text-alt text-error">{{
                     errors.description
@@ -97,20 +98,42 @@
             </span>
         </div>
 
-        <!-- Fayl Yükləmə -->
+        <!-- Script URL -->
         <div class="form-control">
             <label class="label">
-                <span class="label-text">Skript Faylı</span>
+                <span class="label-text">Skript URL</span>
             </label>
             <input
-                type="file"
-                accept=".zip,.rar,.7zip"
-                @change="handleFileChange"
-                class="file-input file-input-bordered w-full"
-                :class="{ 'file-input-error': errors.file }"
+                type="text"
+                v-model="formData.scriptUrl"
+                class="input input-bordered"
+                :class="{ 'input-error': errors.scriptUrl }"
+                placeholder="GitHub, GitLab və ya digər URL"
             />
             <span class="label">
-                <span class="label-text-alt text-error">{{ errors.file }}</span>
+                <span class="label-text-alt text-error">{{
+                    errors.scriptUrl
+                }}</span>
+            </span>
+        </div>
+
+        <!-- Demo URL -->
+        <div class="form-control">
+            <label class="label">
+                <span class="label-text">Demo URL</span>
+                <span class="label-text-alt">(İstəyə bağlı)</span>
+            </label>
+            <input
+                type="text"
+                v-model="formData.demoUrl"
+                class="input input-bordered"
+                :class="{ 'input-error': errors.demoUrl }"
+                placeholder="Canlı demo linki"
+            />
+            <span class="label">
+                <span class="label-text-alt text-error">{{
+                    errors.demoUrl
+                }}</span>
             </span>
         </div>
 
@@ -131,10 +154,10 @@
 </template>
 
 <script setup>
-import { ref, reactive } from "vue";
+import { ref } from "vue";
 import { QuillEditor } from "@vueup/vue-quill";
 import { scriptSchema } from "../../lib/validations/script";
-
+import { UserPoster } from "../../services/user";
 const categories = [
     "E-ticaret",
     "API",
@@ -146,56 +169,47 @@ const categories = [
 
 const isSubmitting = ref(false);
 
-const formData = reactive({
+const formData = ref({
     title: "",
     category: "",
     price: 0,
     isFree: false,
     description: "",
-    file: null,
+    scriptUrl: "",
+    demoUrl: "",
 });
 
-const errors = reactive({
+const errors = ref({
     title: "",
     category: "",
     price: "",
+    isFree: "",
     description: "",
-    file: "",
+    scriptUrl: "",
+    demoUrl: "",
 });
 
-const clearErrors = () => {
-    Object.keys(errors).forEach((key) => {
-        errors[key] = "";
-    });
-};
-
-const handleFileChange = (event) => {
-    const file = event.target.files?.[0];
-    if (file) {
-        formData.file = file;
-    }
-};
-
 const handleSubmit = async () => {
-    clearErrors();
     isSubmitting.value = true;
 
     try {
-        const validatedData = await scriptSchema.parseAsync(formData);
-        console.log("Script data is valid:", validatedData);
+        const validatedData = scriptSchema.parse(formData.value);
+        const request = await UserPoster("/posts/create", {
+            demoUrl: validatedData.demoUrl,
+            count: validatedData.price,
+            scriptUrl: validatedData.scriptUrl,
+            title: validatedData.title,
+            description: validatedData.description,
+        });
 
-        // Here you would typically make an API call to upload the script
+        console.log(request.data);
     } catch (error) {
-        if (error.errors) {
+        if (error.errors != undefined) {
             error.errors.forEach((err) => {
-                const field = err.path[0];
-                if (field && errors.hasOwnProperty(field)) {
-                    errors[field] = err.message;
-                }
+                errors.value[err.path[0]] = err.message;
             });
         }
-    } finally {
-        isSubmitting.value = false;
     }
+    isSubmitting.value = false;
 };
 </script>

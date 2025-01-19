@@ -18,6 +18,41 @@ const { title } = Astro.props;
         <title>{title}</title>
 
         <style is:global>
+                        #dashboard {
+                animation-duration: 300ms;
+                transition: opacity 300ms ease;
+            }
+            #sidebar {
+                animation-duration: 300ms;
+                transition: opacity 300ms ease;
+            }
+            #dashboard.is-changing {
+                opacity: 0;
+            }
+            .nav-link {
+                position: relative;
+                transition: all 0.3s ease;
+            }
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #ea580c;
+                transition: width 0.3s ease;
+            }
+            .nav-link:hover::after {
+                width: 100%;
+            }
+            .nav-link.active {
+                color: #ea580c;
+                background: #fff1e6;
+            }
+            .nav-link.active::after {
+                width: 100%;
+            }
             .activelink {
                 color: #ea580c;
                 font-weight: bold;

@@ -14,12 +14,10 @@ export async function auth(context: APIContext, next: MiddlewareNext) {
     });
 
     const user = response.data?.data;
-    // Kullanıcıyı `locals` içine kaydet
     context.locals.user = user;
     if (/^\/auth(\/.*)?$/.test(context.url.pathname)) {
       return next("/");
     }
-    // Sonraki middleware'e devam et
     return next();
   } catch (error: any) {
     console.error("Auth Middleware Error:", error.message || error);

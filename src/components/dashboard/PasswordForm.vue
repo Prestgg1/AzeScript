@@ -40,7 +40,7 @@
           class="btn btn-primary"
           :disabled="isSubmitting"
         >
-          {{ isSubmitting ? 'Değiştiriliyor...' : 'Şifreyi Değiştir' }}
+          {{ isSubmitting ? 'Dəyişdirilir...' : 'Şifrəni Dəyiş' }}
         </button>
       </div>
     </form>
@@ -76,7 +76,6 @@
       const validatedData = await passwordChangeSchema.parseAsync(formData);
       console.log('Password change data is valid:', validatedData);
       
-      // Here you would typically make an API call to change the password
       
     } catch (error) {
       if (error.errors) {

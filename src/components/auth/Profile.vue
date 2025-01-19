@@ -12,7 +12,7 @@
     </TieredMenu>
 
     <div
-        class="avatar placeholder gap-1 flex justify-center items-center"
+        class="avatar placeholder gap-1 flex cursor-pointer justify-center items-center"
         @click="toggle"
         aria-haspopup="true"
         aria-controls="overlay_tmenu"
