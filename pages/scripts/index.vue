@@ -10,7 +10,7 @@
               class="w-full px-4 py-3 text-sm border rounded-lg focus:outline-none focus:border-blue-500">
             <font-awesome icon="search" class="absolute right-3 top-3.5 text-gray-400" />
           </div>
-          <div class="flex gap-2 flex-wrap md:flex-nowrap">
+         <!--  <div class="flex gap-2 flex-wrap md:flex-nowrap">
             <div v-for="(menu, index) in filterMenus" :key="index" class="relative">
               <button @click="toggleFilter(menu.key)" 
                 class="px-4 py-3 border rounded-lg text-gray-700 hover:bg-gray-50 flex items-center w-full md:w-auto">
@@ -25,7 +25,7 @@
                 </button>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- Scripts Grid -->

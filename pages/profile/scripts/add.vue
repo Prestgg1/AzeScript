@@ -24,8 +24,9 @@
         </div>
 
         <!-- Şəkil -->
-        <CldUploadWidget
+    <!--     <CldUploadWidget
         v-slot="{ open }"
+        @result="console.log($event)"
         uploadPreset="learnteach"
         @success="onUploadSuccess"
         @error="onUploadError"
@@ -48,7 +49,7 @@
           alt="Uploaded Image"
           class="shadow-md w-80 h-80 rounded-xl mx-auto border-4 border-white grayscale"
         />
-      </CldUploadWidget>
+      </CldUploadWidget> -->
   
         <!-- Xüsusiyyətlər və Tələblər -->
         <div class="mb-6 grid gap-4 md:grid-cols-2">
@@ -116,7 +117,7 @@
         };
     }
 
-    function onUploadSuccess(result: CloudinaryResult) {
+    function onUploadSuccess(result: CloudinaryResult): void {
   src.value = result.info.secure_url;
 }
 
@@ -151,7 +152,6 @@ function onUploadError(error:any) {
     const newFeature = ref("");
     const newRequirement = ref("");
     
-  
   
     const addFeature = () => {
       if (newFeature.value.trim()) {
