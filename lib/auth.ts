@@ -15,20 +15,28 @@ export const auth = betterAuth({
     }),
     user: {
         additionalFields: {
-            firstName: {
+            name: {
                 type: "string",
-                fieldName: "firstName",
+                fieldName: "name",
                 returned: true,
                 input: true,
                 required: true,
             },
-            lastName: {
+            username: {
                 type: "string",
-                fieldName: "lastName",
+                fieldName: "username",
+                returned: true,
+                input: true,
+                required: true,
+            },
+            email: {
+                type: "string",
+                fieldName: "email",
                 returned: true,
                 input: true,
                 required: true,
             }
+
         },
         deleteUser: {
             enabled: true,

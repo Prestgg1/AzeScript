@@ -1,9 +1,8 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-    base: true;
-    styled: true;
-}
 
+    themes: light --default, light --prefersdark;
+  }
 
 body {
     @apply min-h-screen flex text-black flex-col h-full flex-1 bg-orange-50
@@ -12,6 +11,9 @@ body {
     margin-inline: auto;
 }
 
+input,textarea{
+    @apply focus:outline-none;
+}
 
 @theme {
     

@@ -1,40 +1,9 @@
 <!-- The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work. -->
 <template>
-    <div class="flex min-h-screen bg-gray-50">
-    <!-- Sidebar - Aynı sidebar korundu -->
-    <div class="fixed left-4 top-4 w-64 rounded-xl bg-gray-900 text-white transition-all duration-300 shadow-xl max-h-[600px]" :class="{ 'w-20': isCollapsed }">
-    <div class="flex h-14 items-center justify-between px-4 border-b border-gray-700">
-    <h1 class="text-xl font-bold" v-show="!isCollapsed">Script Yönetimi</h1>
-    <button @click="toggleSidebar" class="rounded-lg p-2 text-gray-400 hover:bg-gray-800 hover:text-white">
-    <i class="fas" :class="isCollapsed ? 'fa-chevron-right' : 'fa-chevron-left'"></i>
-    </button>
-    </div>
-    <nav class="mt-4">
-    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white">
-    <i class="fas fa-home w-8"></i>
-    <span v-show="!isCollapsed">Ana Sayfa</span>
-    </a>
-    <a href="#" class="flex items-center px-4 py-3 text-gray-300 hover:bg-gray-800 hover:text-white">
-    <i class="fas fa-plus-circle w-8"></i>
-    <span v-show="!isCollapsed">Yeni Script</span>
-    </a>
-    <a href="#" class="flex items-center bg-gray-800 px-4 py-3 text-white">
-    <i class="fas fa-list w-8"></i>
-    <span v-show="!isCollapsed">Scriptlerim</span>
-    </a>
-    </nav>
-    <div class="mt-auto mx-2 rounded-lg bg-gray-800 p-4">
-    <div class="flex items-center space-x-3">
-    <img :src="userAvatar" class="h-10 w-10 rounded-full" alt="Profil" />
-    <div v-show="!isCollapsed">
-    <p class="font-medium">Ahmet Yılmaz</p>
-    <p class="text-sm text-gray-400">Admin</p>
-    </div>
-    </div>
-    </div>
-    </div>
+    <div class="flex container mx-auto">
+ 
     <!-- Main Content -->
-    <div class="ml-72 flex-1 p-8" :class="{ 'ml-28': isCollapsed }">
+    <div class="flex-1 p-8" >
     <div class="mb-8">
     <h1 class="text-2xl font-bold">Scriptlerim</h1>
     <div class="mt-2 text-sm text-gray-600">
@@ -110,8 +79,7 @@
     </div>
     </div>
     </div>
-    <!-- Script Details Modal -->
-    <div v-if="selectedScript" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
+  <!--   <div v-if="selectedScript" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 p-4">
     <div class="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-xl bg-white p-6">
     <div class="mb-6 flex items-start justify-between">
     <div>
@@ -147,13 +115,12 @@
     </button>
     </div>
     </div>
-    </div>
+    </div> -->
     </div>
     </div>
     </template>
     <script lang="ts" setup>
     import { ref, computed } from 'vue';
-    const isCollapsed = ref(false);
     const searchQuery = ref('');
     const selectedCategory = ref('');
     const showCategoryFilter = ref(false);
@@ -226,9 +193,7 @@
     });
     return result;
     });
-    const toggleSidebar = () => {
-    isCollapsed.value = !isCollapsed.value;
-    };
+   
     const toggleCategoryFilter = () => {
     showCategoryFilter.value = !showCategoryFilter.value;
     };

@@ -19,10 +19,11 @@
       </div>
 
       <!-- Profil və ya Loading -->
-      <div v-if="isLoading" class="flex items-center space-x-4">
+       <div class="hidden xl:block">
+        <div v-if="isLoading" class="flex items-center space-x-4">
         <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"></div>
       </div>
-        <Avatar v-else-if="session" :user="session.user" />
+        <Avatar  v-else-if="session" :user="session.user" />
       <div v-else class="hidden xl:flex items-center space-x-4">
         <NuxtLink class="rounded-md px-4 py-2 text-blue-600 hover:bg-blue-50 whitespace-nowrap" to="/login">
           Daxil Ol
@@ -30,6 +31,8 @@
         <NuxtLink class="rounded-md px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap" to="/register">
           Qeydiyyatdan Keç
         </NuxtLink>
+       </div>
+    
       </div>
       <!-- Mobile Menu Button -->
       <button @click="isMenuOpen = !isMenuOpen" class="xl:hidden text-gray-600 hover:text-blue-600">
@@ -45,7 +48,6 @@
     >
       <nav class="flex flex-col space-y-2 p-4">
         <NuxtLink
-          @click="isMenuOpen = false"
           v-for="link in links"
           :key="link.href"
           :to="link.href"
@@ -54,7 +56,8 @@
         >
           {{ link.text }}
         </NuxtLink>
-        <div class="flex justify-between">
+        <Avatar v-if="session" class="self-center dropdown-top" :user="session.user" />
+        <div v-else class="flex justify-between">
           <NuxtLink to="/login" active-class="text-blue-600" class="rounded-md px-4 py-2 text-blue-600 hover:bg-blue-50 whitespace-nowrap">
             Daxil ol
           </NuxtLink>
@@ -68,10 +71,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
 import { authClient } from "~/lib/auth-client";
+const session = useState<UserSession | null>('user')
 
-// Session üçün interfeys yaradılır
 interface UserSession {
   user: {
     id: string;
@@ -89,19 +91,24 @@ interface UserSession {
   };
 }
 
-const session = ref<UserSession | null>(null);
+const router = useRouter()
 const isLoading = ref(true);
 const isMenuOpen = ref(false);
 
 onMounted(async () => {
   try {
+    if(session.value) return
     const { data } = await authClient.getSession();
-    session.value = data as UserSession; 
+    session.value = data as UserSession | null; 
   } catch (error) {
     console.error("Session error:", error);
   } finally {
     isLoading.value = false;
   }
+});
+
+watch(() => router.currentRoute.value, () => {
+  isMenuOpen.value = false;
 });
 
 const links = [

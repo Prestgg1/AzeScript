@@ -17,13 +17,15 @@ export const user = pgTable("user", {
 
 export const categories = pgTable("categories", {
     id: serial("id").primaryKey(),
+    image: text("image"),
+    description: text("description"),
     name: varchar("name", { length: 255 }).notNull(),
     slug: varchar("slug", { length: 255 }).notNull().unique(),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
-// Products tablosu (users tablosuna bağlı)
+
 export const products = pgTable("products", {
     id: serial("id").primaryKey(),
     userId: text("user_id")
@@ -43,6 +45,12 @@ export const products = pgTable("products", {
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+export const productsRelations = relations(products, ({ one }) => ({
+    category: one(categories)
+}))
+export const categoriesRelations = relations(categories, ({ many }) => ({
+    products: many(products)
+}))
 
 export const session = pgTable("session", {
     id: text("id").primaryKey(),
