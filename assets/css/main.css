@@ -7,6 +7,13 @@
 body {
     @apply min-h-screen flex text-black flex-col h-full flex-1 bg-orange-50
 }
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+
+
 @utility container {
     margin-inline: auto;
 }

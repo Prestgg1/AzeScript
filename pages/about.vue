@@ -43,7 +43,7 @@
                         <div class="p-6">
                             <h3 class="text-xl font-semibold mb-2">{{ member.name }}</h3>
                             <p class="text-gray-600 mb-4">{{ member.position }}</p>
-                            <div class="flex space-x-3">
+                            <div class="flex gap-3">
                                 <a href="#" class="text-gray-400 hover:text-blue-600">
                                     <font-awesome :icon="['fab', 'linkedin']" class="text-xl" />
                                 </a>
@@ -73,6 +73,7 @@
         </div>
     </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref } from "vue";

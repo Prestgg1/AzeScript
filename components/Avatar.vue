@@ -1,6 +1,6 @@
 <template>
 <div class="dropdown ">
-        <div tabindex="0" class="m-1 flex items-center space-x-2 cursor-pointer">
+        <div tabindex="0" class="m-1 flex items-center gap-2 cursor-pointer">
           <div class="avatar">
             <div class="w-10 h-10 rounded-full">
               <img :src="user.image || 'https://via.placeholder.com/40'" alt="">

@@ -15,7 +15,7 @@
               <font-awesome :icon="stat.icon" :class="stat.iconColor"></font-awesome>
             </div>
           </div>
-          <div class="flex items-end space-x-2">
+          <div class="flex items-end gap-2">
             <span class="text-2xl font-bold">{{ stat.value }}</span>
             <span class="text-green-500 text-sm flex items-center">
               <font-awesome icon="arrow-up" class="mr-1"></font-awesome>
@@ -62,7 +62,7 @@
             <tbody>
               <tr v-for="script in scripts" :key="script.id" class="border-b border-gray-100 hover:bg-gray-50">
                 <td class="py-3 px-4">
-                  <div class="flex items-center space-x-3">
+                  <div class="flex items-center gap-3">
                     <img :src="script.image" alt="Skript thumbnail" class="w-10 h-10 rounded object-cover" />
                     <span class="font-medium">{{ script.name }}</span>
                   </div>
@@ -74,7 +74,7 @@
                   <span :class="statusClasses(script.status)">{{ script.status }}</span>
                 </td>
                 <td class="py-3 px-4">
-                  <div class="flex space-x-2">
+                  <div class="flex gap-2">
                     <button class="rounded-md p-2 text-blue-600 hover:bg-blue-50">
                       <font-awesome icon="edit"></font-awesome>
                     </button>

@@ -14,7 +14,7 @@
 			Proqram təminatı dünyasının ən böyük skript paylaşım platformasına xoş gəlmisiniz.
 		  </p>
 		  <div
-			class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 justify-center md:justify-start"
+			class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
 		  >
 			<button
 			  class="rounded-md px-6 md:px-8 py-3 bg-white text-blue-600 hover:bg-gray-100"
@@ -31,7 +31,7 @@
 		<div
 		  class="absolute right-0 top-0 w-full md:w-1/2 h-full opacity-20 md:opacity-100"
 		>
-		  <img
+		  <NuxtImg
 			src="/img/heroimage.jpg"
 			class="w-full h-full object-cover"
 			alt="Qəhrəman Şəkli"
@@ -40,16 +40,13 @@
 	  </div>
 	</div>
 	<PopularScripts/>
-
-	
-    
-    <Categories/>
-    <Stats/>
-  
+	<Categories/>
+	<Stats/>
 </template>
 
+
 <script lang="ts" setup>
-import { ref, onMounted, onUnmounted } from "vue";
+import { NuxtImg } from "#components";
 import Stats from "~/components/Stats.vue";
 
 

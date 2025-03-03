@@ -4,13 +4,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
   css: ['~/assets/css/main.css'],
-  modules: [
-    'nuxt-booster',
-    '@nuxt/fonts',
-    '@vesp/nuxt-fontawesome',
-    'nuxt-swiper',
-    "@nuxtjs/cloudinary"
-  ],
+  modules: ['nuxt-booster', '@vesp/nuxt-fontawesome', 'nuxt-swiper', "@nuxtjs/cloudinary", '@nuxthub/core'],
   fontawesome: {
     icons: {
       solid: ['search', 'sign-out-alt ', 'redo', 'plus', 'list', 'chevron-down', 'coins', 'home', 'code', 'download', 'plus-circle', 'times', 'bars', 'circle', 'heart', 'chevron-left', 'chevron-right', 'lightbulb', 'shield-alt', 'hands-helping', 'rocket', 'eye', 'envelope', 'location-dot', 'comments', 'edit', 'trash', 'phone', 'arrow-left', 'arrow-up', 'check', 'star', 'image'],
@@ -30,6 +24,5 @@ export default defineNuxtConfig({
     cloud: {},
     url: {},
   }
-
 
 })

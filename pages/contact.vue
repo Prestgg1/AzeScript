@@ -6,8 +6,8 @@
                 <div>
                     <h1 class="text-4xl font-bold mb-4">Əlaqə</h1>
                     <p class="text-gray-600 mb-8">Suallarınız və ya təklifləriniz üçün bizimlə əlaqə saxlaya bilərsiniz. Ən qısa zamanda sizə cavab verəcəyik.</p>
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-4">
+                    <div class="flex flex-col gap-6">
+                        <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                                 <font-awesome icon='map-marker-alt' class="text-blue-600 text-xl"></font-awesome>
                             </div>
@@ -16,7 +16,7 @@
                                 <p class="text-gray-600">Azərbaycan, Binəqədi</p>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                                 <font-awesome icon='phone' class="text-blue-600 text-xl"></font-awesome>
                             </div>
@@ -25,7 +25,7 @@
                                 <p class="text-gray-600">+994 51 407 05 92</p>
                             </div>
                         </div>
-                        <div class="flex items-center space-x-4">
+                        <div class="flex items-center gap-4">
                             <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
                                 <font-awesome icon='envelope' class="text-blue-600 text-xl"></font-awesome>
                             </div>
@@ -37,7 +37,7 @@
                     </div>
                     <div class="mt-12">
                         <h3 class="text-xl font-semibold mb-4">Bizi İzləyin</h3>
-                        <div class="flex space-x-4">
+                        <div class="flex gap-4">
                             <a href="#" class="w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700">
                                 <font-awesome :icon='["fab", "facebook"]'></font-awesome>
                             </a>
@@ -55,7 +55,7 @@
                 </div>
                 <div class="bg-white rounded-xl shadow-sm p-8 hover:shadow-lg transition-shadow">
                     <h2 class="text-2xl font-bold mb-6">Mesaj Göndərin</h2>
-                    <form @submit.prevent="handleContactSubmit" class="space-y-6">
+                    <form @submit.prevent="handleContactSubmit" class="flex flex-col gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
                             <input type="text" v-model="contactForm.name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" placeholder="Adınız və Soyadınız" />
@@ -91,6 +91,7 @@
         </div>
     </div>
 </template>
+
 <script lang="ts" setup>
 import { ref } from 'vue';
 

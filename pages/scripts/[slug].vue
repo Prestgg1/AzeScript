@@ -10,7 +10,7 @@
         <div class="md:col-span-2">
           <img :src="script.image" :alt="script.title" class="w-full h-64 md:h-96 object-cover rounded-lg mb-6">
 
-          <div class="space-y-6">
+          <div class="gap-6 flex flex-col">
             <div>
               <h3 class="text-lg md:text-xl font-semibold mb-3">Təsvir</h3>
               <p class="text-gray-600 text-sm md:text-base">{{ script.longDescription }}</p>
@@ -28,8 +28,7 @@
           </div>
         </div>
 
-
-        <div class="space-y-6">
+        <div class="gap-6 flex flex-col">
           <div class="bg-white p-6 rounded-lg shadow-lg border">
             <div class="text-2xl md:text-3xl font-bold mb-4">{{ script.price }}</div>
             <button class="w-full py-3 text-sm md:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 mb-3">
@@ -63,7 +62,7 @@
       </div>
       <div class="mt-5">
           <h3 class="text-xl font-semibold mb-6">Şərhlər</h3>
-                <div class="space-y-6">
+                <div class="gap-6 flex flex-col">
                   <div v-for="comment in script.comments" :key="comment.id" class="bg-white p-6 rounded-lg shadow">
                     <div class="flex items-center mb-4">
                       <img :src="comment.avatar" :alt="comment.user" class="w-12 h-12 rounded-full mr-4">
@@ -84,10 +83,8 @@
         </div>
     </div>
   </div>
-  
-              
-       
 </template>
+
   
   <script lang="ts" setup>
   const script = ref({

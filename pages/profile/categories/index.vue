@@ -22,13 +22,13 @@
   
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Təsvir</label>
-              <Field type="text" name="description" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Kateqoriya haqqında qısa bir təsvir yazın..." />
+              <Field type="text" as="textarea" name="description" class="w-full px-4 py-2 border border-gray-300 rounded-lg" placeholder="Kateqoriya haqqında qısa bir təsvir yazın..." />
               <ErrorMessage name="description" class="text-red-500 text-sm mt-1" />
             </div>
   
             <div>
               <label class="block text-sm font-medium text-gray-700 mb-1">Kateqoriya Şəkili</label>
-              <CldUploadWidget   @result="console.log($event)"  v-slot="{ open }" uploadPreset="learnteach" @success="(result:any) => {
+              <CldUploadWidget :options="{ folder: 'azescript/categories' }"  @result="console.log($event)"  v-slot="{ open }" uploadPreset="learnteach" @success="(result:any) => {
                 console.log(result);
                 setFieldValue('image', result.info.secure_url)}" @error="onUploadError">
                 <div class="text-center">
@@ -51,7 +51,7 @@
               </button>
             </div>
           </Form>
-  <!-- 
+  
           <div class="mt-12">
             <h2 class="text-xl font-semibold mb-4">Mövcud Kateqoriyalar</h2>
             <div class="grid grid-cols-1 gap-4">
@@ -67,13 +67,13 @@
                   <button class="p-2 text-blue-600 hover:bg-blue-50 rounded-lg">
                     <font-awesome :icon="['fas', 'edit']" class="mr-2" />
                   </button>
-                  <button class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
+                  <button @click="deleteCategory(category.id)" class="p-2 text-red-600 hover:bg-red-50 rounded-lg">
                     <font-awesome :icon="['fas', 'trash']" class="mr-2" />
                   </button>
                 </div>
               </div>
             </div>
-          </div> -->
+          </div> 
         </div>
       </div>
     </div>
@@ -82,61 +82,75 @@
   <script lang="ts" setup>
   import { Form, Field, ErrorMessage } from 'vee-validate';
   import { CldUploadWidget } from '#components';
-
-  function onUploadError(error:any) {
+  
+  function onUploadError(error: any) {
       console.error('Upload Error:', error);
   }
-
+  
   definePageMeta({
       layout: "dashboard",
   });
   
-  const categories = ref([
-    {
-      id: 1,
-      name: "Web Geliştirme",
-      description: "Web uygulamaları və site geliştirme ile ilgili scriptler",
-      image:
-        "https://public.readdy.ai/ai/img_res/3d2abc40023b46907091fa89bd9dfa20.jpg",
-    },
-    {
-      id: 2,
-      name: "Veri Analizi",
-      description: "Veri analizi və görselleştirme araçları",
-      image:
-        "https://public.readdy.ai/ai/img_res/6dd0766bfa212240869d3fd0dc0b6f8f.jpg",
-    },
-  ]);
+  const categories: categoryType[] | any = ref([]);
+  
+ 
+
+  // Kategorileri API'den çekme fonksiyonu
+  const fetchCategories = async () => {
+    try {
+      const response: responseCategoryType | any = await $fetch('api/categories');
+      categories.value = response.data;
+    } catch (error) {
+      console.error("Kategorileri çekerken hata oluştu:", error);
+    }
+  };
+  
+  onMounted(fetchCategories);
   
   const updateSlug = (values: any, setFieldValue: any) => {
-  const slug = values.name
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '')
-    .replace(/--+/g, '-');
+    const slug = values.name
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/--+/g, '-');
+  
+    setFieldValue('slug', slug);
+  };
+  
+  /* Kategori Yaratma */
+  const handleCategorySubmit = async (values: any) => {
+    try {
+      const response = await $fetch('http://localhost:3000/api/categories', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: values.name,
+          slug: values.slug,
+          description: values.description,
+          image: values.image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
+        }),
+      });
+  
+      console.log("Kategori başarıyla eklendi:", response);
+      fetchCategories(); // Yeni kategoriyi listeye eklemek için tekrar API çağrısı yapıyoruz
+    } catch (error) {
+      console.error("Hata:", error);
+    }
+  };
 
-  setFieldValue('slug', slug); 
-};
 
 
 
-const handleCategorySubmit = async (values: any) => {
+  /* Kategoriya Silinməsi */
+  const deleteCategory = async (categoryId: number) => {
   try {
-    // API'ye POST isteği gönderme
-    const response = await $fetch('http://localhost:3000/api/categories', {
-      method: 'POST',
-      body: JSON.stringify({
-        name: values.name,
-        slug: values.slug,
-        description: values.description,
-        image: values.image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
-      }),
+    await $fetch(`http://localhost:3000/api/categories/${categoryId}`, {
+      method: 'DELETE',
     });
-
-    console.log("Kategori başarıyla eklendi:" , response );
+    categories.value = categories.value.filter((category: categoryType) => category.id !== categoryId); // UI'dan kaldır
   } catch (error) {
-    console.error("Hata:", error);
+    console.error("Kategori silinirken hata oluştu:", error);
   }
 };
 
   </script>
+  
