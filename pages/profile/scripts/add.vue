@@ -5,7 +5,7 @@
     </Title>
   </Head>
   <div class="card bg-base-100 container mx-auto my-5 shadow-md p-6">
-    <Form v-slot="{ setFieldValue, values }" class="flex flex-col gap-8" @submit="saveScript">
+    <Form :validationSchema="scriptSchema" v-slot="{ setFieldValue, values }" class="flex flex-col gap-8" @submit="saveScript">
       <!-- Əsas Məlumatlar -->
       <div class="mb-6">
         <h2 class="text-lg font-semibold">Əsas Məlumatlar</h2>
@@ -14,7 +14,9 @@
             <label class="label">
               <span class="label-text">Skript Başlığı <span class="text-red-500">*</span></span>
             </label>
-            <Field name="title" type="text" class="input input-bordered w-full" required />
+            <Field name="name" type="text" class="input input-bordered w-full" required />
+            <ErrorMessage name="name" class="text-red-500 text-sm mt-1" />
+          
           </div>
           <div class="form-control flex-1">
             <label class="label">
@@ -26,6 +28,7 @@
                 {{ category.name }}
               </option>
             </Field>
+            <ErrorMessage name="category" class="text-red-500 text-sm mt-1" />
           </div>
           <div class="form-control flex-1">
             <label class="label">
@@ -82,6 +85,7 @@
             class="input input-bordered w-full"
             placeholder="Xüsusiyyətləri aralarında vergül ilə ayırın"
           />
+          <ErrorMessage name="features" class="text-red-500 text-sm mt-1" />
         </div>
         <div class="form-control">
           <label class="label">
@@ -93,6 +97,8 @@
             class="input input-bordered w-full"
             placeholder="Sistem tələblərini aralarında vergül ilə ayırın"
           />
+          <ErrorMessage name="requirements" class="text-red-500 text-sm mt-1" />
+
         </div>
       </div>
 
@@ -103,15 +109,16 @@
             <span class="label-text">Demo Link</span>
           </label>
           <Field name="demoLink" type="url" class="input input-bordered w-full" />
+          <ErrorMessage name="demoLink" class="text-red-500 text-sm mt-1" />
         </div>
         <div class="form-control">
           <label class="label">
             <span class="label-text">Açıqlama <span class="text-red-500">*</span></span>
           </label>
           <Field name="description" as="textarea" rows="4" class="textarea textarea-bordered w-full" required />
+          <ErrorMessage name="description" class="text-red-500 text-sm mt-1" />
         </div>
       </div>
-
       <!-- Əməliyyat Düymələri -->
       <div class="flex justify-end gap-4">
         <button type="reset" class="btn btn-ghost">Ləğv et</button>
@@ -131,7 +138,25 @@ definePageMeta({
   layout: "dashboard",
 });
 
+const session = useState<UserSession | null>('user')
 
+interface UserSession {
+  user: {
+    id: string;
+    email: string;
+    emailVerified: boolean;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    image?: string | null;
+    firstName: string;
+    lastName: string;
+    banned?: boolean;
+    role?: string;
+    banReason?: string | null;
+  };
+}
+console.log(session.value?.user.id)
 // API'den kategorileri çekiyoruz
 const categories = ref<categoryType[] | any>([]);
 const fetchCategories = async () => {
@@ -150,7 +175,27 @@ function onUploadError(error: any) {
 }
 
 // Form submit işlemi; form içindeki "values" objesi ile çalışıyoruz.
-const saveScript = (values: any) => {
-  console.log("Script saved:", values);
+const saveScript = async (values: any) => {
+  const {name,slug,category,requirements,description,image,demoLink} = values
+  try {
+      const response = await $fetch('http://localhost:3000/api/products', {
+        method: 'POST',
+        body: JSON.stringify({
+          name,
+          slug,
+          price:0,
+          demoLink,
+          categoryId: category,
+          requirements,
+          description,
+          image: image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
+        }),
+      });
+  
+      console.log("Script Uğurla Əlavə Olundu", response);
+
+    } catch (error) {
+      console.error("Hata:", error);
+    }
 };
 </script>
