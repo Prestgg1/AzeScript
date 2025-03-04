@@ -1,5 +1,8 @@
 <!-- The exported code uses Tailwind CSS. Install Tailwind CSS in your dev environment to ensure all styles work. -->
 <template>
+  <Head>
+    <Title>Skriptlər</Title>
+  </Head>
   <div class="min-h-screen bg-white">
     <div class="pt-32 pb-20">
       <div class="max-w-7xl mx-auto px-4">

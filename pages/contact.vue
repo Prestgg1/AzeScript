@@ -1,4 +1,7 @@
 <template>
+        <Head>
+    <Title>Əlaqə</Title>
+  </Head>
     <!-- Əlaqə Səhifəsi -->
     <div class="pt-24 pb-20">
         <div class="max-w-7xl mx-auto px-4">

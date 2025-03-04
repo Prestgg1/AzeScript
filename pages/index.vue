@@ -1,4 +1,7 @@
 <template>
+	<Head>
+		<Title>Ana Səhifə</Title>
+	</Head>
 	<div
 	  class="relative min-h-[400px] md:h-[600px] bg-gradient-to-r from-blue-600 to-blue-800 overflow-hidden"
 	>
@@ -48,7 +51,9 @@
 <script lang="ts" setup>
 import { NuxtImg } from "#components";
 import Stats from "~/components/Stats.vue";
-
+definePageMeta({
+    title:"asasd"
+})
 
 </script>
 

@@ -5,3 +5,7 @@
     <NuxtPage />
   </NuxtLayout>
 </template>
+<script setup>
+import 'vue-toast-notification/dist/theme-bootstrap.css';
+
+</script>

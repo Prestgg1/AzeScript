@@ -1,4 +1,7 @@
 <template>
+    <Head>
+    <Title>Kateqoriyalar</Title>
+  </Head>
   <div class="min-h-screen bg-white">
     <!-- Header -->
 

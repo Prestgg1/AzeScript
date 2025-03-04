@@ -1,11 +1,12 @@
 <template>
   <!-- Qeydiyyat Bölməsi -->
-  <div class="max-w-7xl mx-auto px-4 py-20">
-      <div class="max-w-md mx-auto bg-white rounded-2xl shadow-lg p-8">
-          <div class="text-center mb-8">
-              <h1 class="text-3xl font-bold text-gray-900 mb-2">Qeydiyyatdan keç</h1>
-              <p class="text-gray-600">Yeni hesab yaradın</p>
-          </div>
+  <Head>
+    <Title>Hesab Aç</Title>
+  </Head>
+   <NuxtLayout name="auth">
+    <template v-slot:header>Yeni hesab yaradın </template>
+    <template v-slot:title>Qeydiyyatdan keç</template>
+
           <Form :validation-schema="registerSchema" @submit="handleRegister" class="flex flex-col gap-6">
               <div>
                   <label class="block text-sm font-medium text-gray-700 mb-1">Ad Soyad</label>
@@ -59,14 +60,17 @@
               </div>
               <div class="flex items-start">
                   <Field id="agreeToTerms" type="checkbox" name="agreeToTerms" :value="true" :unchecked-value="false" class="mt-1 rounded text-blue-600" />
-                  <span class="ml-2 text-sm text-gray-600">
+                  <label htmlFor="agreeToTerms" class="ml-2 text-sm text-gray-600">
                       <a href="#" class="text-blue-600 hover:text-blue-800">İstifadə şərtlərini</a> və
                       <a href="#" class="text-blue-600 hover:text-blue-800">Məxfilik siyasətini</a> qəbul edirəm
-                  </span>
+                  </label>
               </div>
               <ErrorMessage name="agreeToTerms" class="text-red-500 text-sm mt-1" />
-              <button type="submit" class="w-full rounded-md py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium">
-                  Qeydiyyatdan keç
+              <button  :disabled="isLoading"  type="submit" class="w-full rounded-md py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium">
+                <span v-if="isLoading">Qeydiyyatdan keçilir...</span>
+                <span v-else>Qeydiyyatdan keç</span>
+                
+                
               </button>
               <div class="relative">
                   <div class="absolute inset-0 flex items-center">
@@ -94,19 +98,21 @@
                   Daxil olun
               </NuxtLink>
           </div>
-      </div>
-  </div>
+</NuxtLayout>
 </template>
 
 <script lang="ts" setup>
 import { Form, Field,ErrorMessage } from 'vee-validate';
 import { authClient } from '~/lib/auth-client';
+import { useToast } from 'vue-toast-notification';  
 
+const isLoading = ref(false);
 const router = useRouter();
+const $toast = useToast({
+  position:'top-right'
+}); 
 
-const handleGoogleLogin = () => {
-  console.log('Google ilə daxil olma cəhdi');
-};
+
 
 const handleGoogleRegister = () => {
   console.log('Google ilə qeydiyyat cəhdi');
@@ -122,18 +128,21 @@ const handleRegister = async (values: any) => {
     callbackURL: "/dashboard"
   }, {
         onRequest: (ctx) => {
+            
+        isLoading.value = true;
           console.log('Qeydiyyatdan keçmə cəhdi');
-            //show loading
         },
         onSuccess: (ctx) => {
-          router.push('/login');
+          $toast.success("Uğurla daxil olundu!"); 
+          setTimeout(()=>{
+            router.push('/login');
+          },2000)
           console.log('Qeydiyyatdan keçildi');
-            //redirect to the dashboard or sign in page
-        },
-        onError: (ctx) => {
-            // display the error message
-            alert(ctx.error.message);
         },
     })
+    isLoading.value = false
+    if (error) {
+        error.code=="USER_ALREADY_EXISTS" && $toast.error('Bu hesab zaten var');
+    }
 };
 </script>

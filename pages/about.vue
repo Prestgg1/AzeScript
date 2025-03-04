@@ -1,6 +1,8 @@
 <template>
     <!-- Header - Eyni başlıq qalır -->
-
+    <Head>
+    <Title>Haqqımızda</Title>
+  </Head>
     <!-- Haqqımızda Səhifəsi -->
     <div class="pt-24 pb-20">
         <div class="max-w-7xl mx-auto px-4">
