@@ -1,21 +1,25 @@
 <template>
+  <Head>
+    <Title>
+       Skript Əlavə Et
+    </Title>
+  </Head>
   <div class="card bg-base-100 container mx-auto my-5 shadow-md p-6">
-    <Form v-slot="{ setFieldValue, values }" @submit="saveScript">
+    <Form v-slot="{ setFieldValue, values }" class="flex flex-col gap-8" @submit="saveScript">
       <!-- Əsas Məlumatlar -->
       <div class="mb-6">
         <h2 class="text-lg font-semibold">Əsas Məlumatlar</h2>
-        <div class="grid gap-4 md:grid-cols-3">
-          <div class="form-control">
+        <div class="flex flex-col gap-4 md:flex-row md:gap-6">
+          <div class="form-control flex-1">
             <label class="label">
               <span class="label-text">Skript Başlığı <span class="text-red-500">*</span></span>
             </label>
             <Field name="title" type="text" class="input input-bordered w-full" required />
           </div>
-          <div class="form-control">
+          <div class="form-control flex-1">
             <label class="label">
               <span class="label-text">Kateqoriya <span class="text-red-500">*</span></span>
             </label>
-            <!-- Kategori select alanı artık formun değerlerine bağlı -->
             <Field as="select" name="category" class="select select-bordered w-full">
               <option disabled value="">Kateqoriya Seçin</option>
               <option v-for="category in categories" :key="category.id" :value="category.id">
@@ -23,7 +27,7 @@
               </option>
             </Field>
           </div>
-          <div class="form-control">
+          <div class="form-control flex-1">
             <label class="label">
               <span class="label-text">Qiymət (₼) <span class="text-red-500">*</span></span>
             </label>
@@ -62,7 +66,7 @@
               <p class="text-xs text-gray-500">PNG, JPG, GIF - maksimum 10MB</p>
             </div>
           </div>
-        </CldUploadWidget>
+           </CldUploadWidget>
       </div>
       <ErrorMessage name="image" class="text-red-500 text-sm mt-1" />
 
@@ -72,7 +76,6 @@
           <label class="label">
             <span class="label-text">Xüsusiyyətlər <span class="text-red-500">*</span></span>
           </label>
-          <!-- İstifadəçi, xüsusiyyətləri aralarında vergül ilə yazsın -->
           <Field
             name="features"
             type="text"
@@ -94,7 +97,7 @@
       </div>
 
       <!-- Demo Link & Açıqlama -->
-      <div class="mb-6 flex flex-col gap-4">
+      <div class="mb-6 flex flex-col gap-8">
         <div class="form-control">
           <label class="label">
             <span class="label-text">Demo Link</span>
@@ -111,13 +114,13 @@
 
       <!-- Əməliyyat Düymələri -->
       <div class="flex justify-end gap-4">
-        <!-- Reset butonunu vee-validate'in reset özelliği kullanacak -->
         <button type="reset" class="btn btn-ghost">Ləğv et</button>
         <button type="submit" class="btn btn-primary">Yadda saxla və Göndər</button>
       </div>
     </Form>
   </div>
 </template>
+
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue';

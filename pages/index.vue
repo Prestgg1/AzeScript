@@ -51,9 +51,6 @@
 <script lang="ts" setup>
 import { NuxtImg } from "#components";
 import Stats from "~/components/Stats.vue";
-definePageMeta({
-    title:"asasd"
-})
 
 </script>
 
