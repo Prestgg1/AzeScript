@@ -127,7 +127,6 @@
         </div>
         <ClientOnly>
           <QuillEditor theme="snow" />
-
         </ClientOnly>
       </div>
 
@@ -145,7 +144,8 @@
 import { ref, onMounted } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { CldUploadWidget } from '#components';
-import { QuillEditor } from '@vueup/vue-quill'
+const {QuillEditor} = defineAsyncComponent(() => import('@vueup/vue-quill'))
+
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 definePageMeta({
   layout: "dashboard",
