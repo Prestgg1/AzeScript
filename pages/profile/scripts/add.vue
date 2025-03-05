@@ -118,7 +118,19 @@
           <Field name="description" as="textarea" rows="4" class="textarea textarea-bordered w-full" required />
           <ErrorMessage name="description" class="text-red-500 text-sm mt-1" />
         </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Məzmun <span class="text-red-500">*</span></span>
+          </label>
+          <Field name="content" as="textarea" rows="4" class="textarea textarea-bordered w-full" required />
+          <ErrorMessage name="content" class="text-red-500 text-sm mt-1" />
+        </div>
+        <ClientOnly>
+          <QuillEditor theme="snow" />
+
+        </ClientOnly>
       </div>
+
       <!-- Əməliyyat Düymələri -->
       <div class="flex justify-end gap-4">
         <button type="reset" class="btn btn-ghost">Ləğv et</button>
@@ -133,10 +145,11 @@
 import { ref, onMounted } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { CldUploadWidget } from '#components';
-
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 definePageMeta({
   layout: "dashboard",
-});
+})
 
 const session = useState<UserSession | null>('user')
 
