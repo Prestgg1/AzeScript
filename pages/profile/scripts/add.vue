@@ -5,7 +5,7 @@
     </Title>
   </Head>
   <div class="card bg-base-100 container mx-auto my-5 shadow-md p-6">
-    <Form :validationSchema="scriptSchema" v-slot="{ setFieldValue, values }" class="flex flex-col gap-8" @submit="saveScript">
+    <Form :validationSchema="scriptSchema" v-slot="{ setFieldValue, values,errors }" class="flex flex-col gap-8" @submit="saveScript">
       <!-- Əsas Məlumatlar -->
       <div class="mb-6">
         <h2 class="text-lg font-semibold">Əsas Məlumatlar</h2>
@@ -14,9 +14,16 @@
             <label class="label">
               <span class="label-text">Skript Başlığı <span class="text-red-500">*</span></span>
             </label>
-            <Field name="name" type="text" class="input input-bordered w-full" required />
-            <ErrorMessage name="name" class="text-red-500 text-sm mt-1" />
-          
+            <Field name="title" @change="setFieldValue('slug',slugify(values.title))" type="text" class="input input-bordered w-full" required />
+            <ErrorMessage name="title" class="text-red-500 text-sm mt-1" />
+          </div>
+          <div class="form-control flex-1">
+            <label class="label">
+              <span class="label-text">Url <span class="text-red-500">*</span></span>
+            </label>
+            <input disabled :value="`azescript.dev/${values.slug??''}`" type="text" class="input input-bordered w-full" readonly required />
+            <ErrorMessage name="slug" class="text-red-500 text-sm mt-1" />
+      
           </div>
           <div class="form-control flex-1">
             <label class="label">
@@ -27,14 +34,14 @@
               <option v-for="category in categories" :key="category.id" :value="category.id">
                 {{ category.name }}
               </option>
-            </Field>
+            </Field>  
             <ErrorMessage name="category" class="text-red-500 text-sm mt-1" />
           </div>
           <div class="form-control flex-1">
             <label class="label">
               <span class="label-text">Qiymət (₼) <span class="text-red-500">*</span></span>
             </label>
-            <Field name="price" type="number" class="input input-bordered w-full" required disabled />
+            <Field name="price"  readonly value="0" type="number" class="input input-bordered w-full" required  />
             <ErrorMessage name="price" class="text-red-500 text-sm" />
           </div>
         </div>
@@ -72,6 +79,7 @@
            </CldUploadWidget>
       </div>
       <ErrorMessage name="image" class="text-red-500 text-sm mt-1" />
+      {{ values.image }}
 
       <!-- Xüsusiyyətlər və Sistem Tələbləri -->
       <div class="mb-6 grid gap-4 md:grid-cols-2">
@@ -101,6 +109,18 @@
 
         </div>
       </div>
+      <div class="form-control">
+          <label class="label">
+            <span class="label-text">Açar Sözlər <span class="text-red-500">*</span></span>
+          </label>
+          <Field
+            name="keywords"
+            type="text"
+            class="input input-bordered w-full"
+            placeholder="Açar Sözləri aralarında vergül ilə ayırın"
+          />
+          <ErrorMessage name="keywords" class="text-red-500 text-sm mt-1" />
+        </div>
 
       <!-- Demo Link & Açıqlama -->
       <div class="mb-6 flex flex-col gap-8">
@@ -125,9 +145,7 @@
           <Field name="content" as="textarea" rows="4" class="textarea textarea-bordered w-full" required />
           <ErrorMessage name="content" class="text-red-500 text-sm mt-1" />
         </div>
-        <ClientOnly>
-          <QuillEditor theme="snow" />
-        </ClientOnly>
+  
       </div>
 
       <!-- Əməliyyat Düymələri -->
@@ -145,6 +163,16 @@ import { ref, onMounted } from 'vue';
 import { Field, Form, ErrorMessage } from 'vee-validate';
 import { CldUploadWidget } from '#components';
 const {QuillEditor} = defineAsyncComponent(() => import('@vueup/vue-quill'))
+
+
+function slugify(str:string) {
+  str = str.replace(/^\s+|\s+$/g, ''); // trim leading/trailing white space
+  str = str.toLowerCase(); // convert string to lowercase
+  str = str.replace(/[^a-z0-9 -]/g, '') // remove any non-alphanumeric characters
+           .replace(/\s+/g, '-') // replace spaces with hyphens
+           .replace(/-+/g, '-'); // remove consecutive hyphens
+  return str;
+}
 
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 definePageMeta({
@@ -169,7 +197,6 @@ interface UserSession {
     banReason?: string | null;
   };
 }
-console.log(session.value?.user.id)
 // API'den kategorileri çekiyoruz
 const categories = ref<categoryType[] | any>([]);
 const fetchCategories = async () => {
@@ -189,19 +216,25 @@ function onUploadError(error: any) {
 
 // Form submit işlemi; form içindeki "values" objesi ile çalışıyoruz.
 const saveScript = async (values: any) => {
-  const {name,slug,category,requirements,description,image,demoLink} = values
+  console.log("Submitings")
+  const {title,slug,category,requirements,description,image,demoLink,content,features,keywords} = values
+  console.log("Submiting",values)
   try {
-      const response = await $fetch('http://localhost:3000/api/products', {
+      const response = await $fetch('/api/products', {
         method: 'POST',
         body: JSON.stringify({
-          name,
+          userId: session.value?.user.id,
+          title,
           slug,
+          image: image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
+          description,
+          content,
           price:0,
+          keywords: keywords,
+          requirements: requirements.split(','),
+          features: features.split(','),
           demoLink,
           categoryId: category,
-          requirements,
-          description,
-          image: image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
         }),
       });
   

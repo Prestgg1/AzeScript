@@ -20,9 +20,9 @@ export default defineEventHandler(async (event) => {
         demoLink,
         categoryId
     } = body
-
+    console.log(body)
     // Eksik alan kontrolü
-    if (!userId || !title || !slug || !image || !description || !content || !price || !keywords || !requirements || !features || !categoryId) {
+    if (!userId || !title || !slug || !image || !description || !content || !keywords || !requirements || !features || !categoryId) {
         throw new Error("Gerekli tüm alanlar doldurulmalıdır!")
     }
 

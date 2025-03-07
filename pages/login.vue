@@ -105,7 +105,7 @@ const handleLogin = async (values: any) => {
     {
       email: values.email,
       password: values.password,
-      callbackURL: "/dashboard",
+      callbackURL: "/profile",
       rememberMe: values.rememberMe,
     },
     {

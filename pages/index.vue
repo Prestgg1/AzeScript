@@ -6,9 +6,9 @@
 	  class="relative min-h-[400px] md:h-[600px] bg-gradient-to-r from-blue-600 to-blue-800 overflow-hidden"
 	>
 	  <div
-		class="md:px-32 mx-auto px-4 h-full flex flex-col md:flex-row items-center py-12 md:py-0"
+		class="xl:px-32 md:px-16 mx-auto px-4 h-full flex flex-col md:flex-row items-center py-12 md:py-0"
 	  >
-		<div class="w-full md:w-1/2 text-white z-10 text-center md:text-left">
+		<div class="w-full  md:w-1/2 text-white z-10 text-center md:text-left">
 		  <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
 			Kod Dünyasının Paylaşım Platforması
 		  </h2>

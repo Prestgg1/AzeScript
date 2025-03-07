@@ -1,4 +1,7 @@
 <template>
+  <Head>
+    <Title>Profil</Title>
+  </Head>
     <!-- Əsas Məzmun -->
     <div class="py-2 flex-1 container mx-auto px-4">
       
@@ -113,6 +116,19 @@ function statusClasses(status: string) {
           "bg-red-100 text-red-700": status === "Passiv"
         };
 };
+
+
+const scriptler = ref<categoryType[] | any>([]);
+const fetchCategories = async () => {
+  try {
+    const response: responseCategoryType | any = await $fetch('/api/products');
+    scriptler.value = response.data;
+    console.log(scriptler.value);
+  } catch (error) {
+    console.error("Kategorileri çekerken hata oluştu:", error);
+  }
+};
+onMounted(fetchCategories);
 
 const scripts = ref([
     {
