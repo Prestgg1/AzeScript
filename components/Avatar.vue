@@ -1,5 +1,5 @@
 <template>
-  <div class="dropdown">
+  <div :class="props.class" class="dropdown">
     <div tabindex="0" class="m-1 flex items-center gap-2 cursor-pointer">
       <div class="avatar">
         <div class="w-10 h-10 rounded-full">
@@ -19,20 +19,21 @@
   <!-- Modal -->
   <dialog id="logout_modal" class="modal">
     <div class="modal-box bg-blue-200 p-6 rounded-xl">
-      <h3 class="font-bold text-xl text-center">Emin misiniz?</h3>
-      <p class="py-4 text-center text-gray-700">Çıkış yapmak üzeresiniz. Devam etmek istiyor musunuz?</p>
+      <h3 class="font-bold text-xl text-center">Əminsiniz?</h3>
+      <p class="py-4 text-center text-gray-700">Çıxmaq üzərəsiniz. Davam etmək istəyirsiniz?</p>
       <div class="modal-action justify-center">
-        <button class="btn btn-error text-white" @click="logout">Evet, Çıkış Yap</button>
-        <button class="btn btn-outline" @click="closeModal">Hayır, Kalmaya Devam Et</button>
+        <button class="btn btn-error text-white" @click="logout">Bəli, Çıxış Et</button>
+        <button class="btn btn-outline" @click="closeModal">Xeyr, Qalmağa Davam Et</button>
       </div>
     </div>
-  </dialog>
+</dialog>
+
 </template>
 <script setup>
 import { ref } from 'vue'
 import { authClient } from '~/lib/auth-client'
 
-const props = defineProps(['user'])
+const props = defineProps(['user','class'])
 
 const links = ref([
   { href: "/profile/", text: "İdarə Paneli" },
@@ -52,8 +53,8 @@ const closeModal = () => {
 
 const logout = async () => {
   await authClient.signOut()
-  closeModal()  // Modal'ı kapat
-  // Gerekirse yönlendirme yapılabilir, örneğin:
-  // window.location.href = '/login'
+  closeModal() 
+  window.location.href = '/login'
+
 }
 </script>

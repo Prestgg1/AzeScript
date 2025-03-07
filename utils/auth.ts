@@ -3,6 +3,7 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@/db/schema";
 import { createAuthClient } from "better-auth/vue";
 import { useDrizzle } from "@/server/utils/drizzle";
+import { bearer } from "better-auth/plugins";
 
 
 export const auth = betterAuth({
@@ -11,6 +12,7 @@ export const auth = betterAuth({
         autoSignIn: true
     },
     basePath: "/api/auth",
+    plugins: [bearer()],
     user: {
         additionalFields: {
             website: {
