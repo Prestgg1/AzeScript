@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
     console.log(body);
     if (!userId || !title || !slug || !image || !description || !content || !keywords || !requirements || !features || !categoryId) {
-        throw new Error("Gerekli tüm alanlar doldurulmalıdır!");
+        throw new Error("Bütün saheler doldurulmalidir");
     }
     const existingProduct = await useDrizzle()
         .select()

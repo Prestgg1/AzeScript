@@ -15,6 +15,20 @@
       "when": 1740824260547,
       "tag": "0001_sweet_miracleman",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1741950837708,
+      "tag": "0002_dry_redwing",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1741951640205,
+      "tag": "0003_condemned_adam_warlock",
+      "breakpoints": true
     }
   ]
 }

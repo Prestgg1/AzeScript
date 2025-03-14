@@ -1,5 +1,7 @@
-import { pgTable, integer, serial, varchar, text, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, integer, serial, varchar, text, timestamp, boolean,pgEnum } from "drizzle-orm/pg-core";
 import { relations } from 'drizzle-orm';
+export const activeEnum = pgEnum("active", ["active", "passive", "pending"]);
+
 export const user = pgTable("user", {
     id: text("id").primaryKey(),
     name: varchar("name", { length: 255 }).notNull(),
@@ -37,6 +39,7 @@ export const products = pgTable("products", {
     description: text("description").notNull(),
     content: text("content").notNull(),
     price: integer("price").notNull(),
+    active: activeEnum().default('active'),
     keywords: text("keywords").notNull(),
     requirements: text("requirements").array().notNull(),
     features: text("features").array().notNull(),

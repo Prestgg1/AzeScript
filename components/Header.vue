@@ -19,11 +19,12 @@
       </div>
 
       <!-- Profil və ya Loading -->
+       
       <div class="hidden xl:block">
         <div v-if="isLoading" class="flex items-center gap-4">
           <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-gray-600"></div>
         </div>
-        <Avatar v-else-if="session" :user="session.user" class="dropdown-top dropdown-left" />
+        <Avatar v-else-if="session" :user="session.user" class="dropdown-bottom" />
         <div v-else class="hidden xl:flex items-center gap-4">
           <NuxtLink class="rounded-md px-4 py-2 text-blue-600 hover:bg-blue-50 whitespace-nowrap" to="/login">
             Daxil Ol
