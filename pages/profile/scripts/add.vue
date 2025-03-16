@@ -21,7 +21,7 @@
             <label class="label">
               <span class="label-text">Url <span class="text-red-500">*</span></span>
             </label>
-            <input disabled :value="`azescript.dev/${values.slug??''}`" type="text" class="input input-bordered w-full" readonly required />
+            <input disabled :value="`azescript.dev/scripts/${values.slug??''}`" type="text" class="input input-bordered w-full" readonly required />
             <ErrorMessage name="slug" class="text-red-500 text-sm mt-1" />
       
           </div>
@@ -41,7 +41,7 @@
             <label class="label">
               <span class="label-text">Qiymət (₼) <span class="text-red-500">*</span></span>
             </label>
-            <Field name="price"  readonly value="0" type="number" class="input input-bordered w-full" required  />
+            <Field name="price"  value="0" type="number" class="input input-bordered w-full" required  />
             <ErrorMessage name="price" class="text-red-500 text-sm" />
           </div>
         </div>

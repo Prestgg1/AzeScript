@@ -1,16 +1,36 @@
-import { categories, products } from "@/db/schema"
-import { useDrizzle } from "~/server/utils/drizzle"
-import { eq, count } from 'drizzle-orm';
+import { categories } from "@/db/schema";
+import { useDrizzle } from "~/server/utils/drizzle";
+
 export default defineEventHandler(async (event) => {
-    const categoriesWithProductCount = await useDrizzle().select({
-        id: categories.id,
-        name: categories.name,
-        slug: categories.slug,
-        image: categories.image,
-        description: categories.description,
-        productCount: count(products.id)
-    }).from(categories).leftJoin(products, eq(categories.id, products.categoryId)).groupBy(categories.id)
+    const categoriesWithProductCount = await useDrizzle().query.categories.findMany({
+        columns: {
+            id: true,
+            name: true,
+            slug: true,
+            image: true,
+            description: true,
+        },
+        with: {
+            products: {
+                columns: {
+                    id: true,  // Sadece sayım için gerekli
+                },
+            },
+        },
+    });
+
+    // Her kategori için ürün sayısını hesapla
+    const formattedData = categoriesWithProductCount.map(category => ({
+        id: category.id,
+        name: category.name,
+        slug: category.slug,
+        image: category.image,
+        description: category.description,
+        productCount: category.products.length,  // Ürün sayısını hesapla
+    }));
+
     return {
-        data: categoriesWithProductCount
-    }
-})
+        data: formattedData
+    };
+});
+

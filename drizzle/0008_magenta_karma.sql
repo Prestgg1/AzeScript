@@ -1,0 +1,1 @@
+ALTER TABLE "products" ADD COLUMN "average_rating" integer DEFAULT 0;

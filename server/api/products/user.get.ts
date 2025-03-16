@@ -1,7 +1,6 @@
-import { products, categories } from "@/db/schema";
+import { favorites, products } from "@/db/schema";
 import { useDrizzle } from "~/server/utils/drizzle";
-import { eq, count } from "drizzle-orm";
-import { addRouteMiddleware } from "nuxt/app";
+import { count } from "drizzle-orm";
 import { auth } from "~/utils/auth";
 
 export default defineEventHandler(async (event) => {
@@ -11,35 +10,49 @@ export default defineEventHandler(async (event) => {
   if (!session) {
     return { error: "Unauthorized" };
   }
+
   const page = Number(getQuery(event).page || "1");
   const limit = 8;
-  const totalCount = await useDrizzle()
-    .select({ count: count() })
-    .from(products)
-    .leftJoin(categories, eq(categories.id, products.categoryId))
-    .then((res) => res[0].count);
-  const totalPages = Math.ceil(totalCount / limit);
   const offset = (page - 1) * limit;
 
-  const scriptler = await useDrizzle()
-    .select({
-      id: products.id,
-      title: products.title,
-      image: products.image,
-      status: products.active,
-      description: products.description,
-      price: products.price,
-      slug: products.slug,
-      category: categories.name
+  // Toplam ürün sayısını al
+  const totalCount = await useDrizzle()
+    .query.products.findMany({
+      where: (products, { eq }) => eq(products.userId, session.user.id),
+      columns: {
+        id: true,
+      },
     })
-    .from(products)
-    .leftJoin(categories, eq(categories.id, products.categoryId))
-    .where(eq(products.userId,session.user.id))
-    .limit(limit)
-    .offset(offset);
+    .then((res) => res.length);
+
+  const totalPages = Math.ceil(totalCount / limit);
+
+  // Ürünleri çekiyoruz (Kategori bilgisi ile)
+  const scriptler = await useDrizzle().query.products.findMany({
+    where: (products, { eq }) => eq(products.userId, session.user.id),
+    columns: {
+      id: true,
+      title: true,
+      image: true,
+      active: true,
+      description: true,
+      price: true,
+      slug: true,
+    },
+    with: {
+      category: {
+        columns: {
+          name: true,
+        },
+      },
+      favorites: { id: true }
+    },
+    limit,
+    offset,
+  });
 
   return {
-    data:scriptler,
+    data: scriptler,
     pagination: {
       currentPage: page,
       totalPages,

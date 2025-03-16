@@ -3,8 +3,8 @@ import { z } from 'zod';
 
 export const scriptSchema = toTypedSchema(z.object({
     title: z.string({ message: 'Bu sahə tələb olunur' }).min(2, { message: 'Bu sahə tələb olunur' }),
-    slug: z.string({ message: 'Bu sahə tələb olunur' }).min(2, { message: 'Bu sahə tələb olunur' }),
-    category: z.number({message: 'Bu sahə tələb olunur'}),
+    slug: z.string().optional(),
+    category: z.number({ message: 'Bu sahə tələb olunur' }),
     features: z.string({ message: 'Bu sahə tələb olunur' }).min(1, { message: 'Bu sahə tələb olunur' }),
     price: z.string().optional(),
     keywords: z.string({ message: 'Bu sahə tələb olunur' }).min(2, { message: 'Bu sahə tələb olunur' }),

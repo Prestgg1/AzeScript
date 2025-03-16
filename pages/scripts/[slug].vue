@@ -2,27 +2,33 @@
   <div class="pt-10 pb-20">
     <div class="max-w-7xl mx-auto px-4">
       <NuxtLink to="/scripts" class="mb-8 flex items-center text-gray-600 hover:text-gray-900">
-        <font-awesome icon='fa-arrow-left' class="mr-2"></font-awesome>
+        <font-awesome icon="fa-arrow-left" class="mr-2"></font-awesome>
         Skriptlərə Qayıt
       </NuxtLink>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Loading Spinner -->
+      <div v-if="status == 'pending'" class="flex justify-center items-center h-96">
+        <span class="loading loading-spinner loading-xl"></span>
+      </div>
+
+      <!-- Script Detail -->
+      <div v-else-if="status == 'success'" class="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div class="md:col-span-2">
-          <img :src="script.image" :alt="script.title" class="w-full h-64 md:h-96 object-cover rounded-lg mb-6">
+         <img :src="script.image" :alt="script?.title" class="w-full h-64 md:h-96 object-cover rounded-lg mb-6"> 
 
           <div class="gap-6 flex flex-col">
             <div>
               <h3 class="text-lg md:text-xl font-semibold mb-3">Təsvir</h3>
-              <p class="text-gray-600 text-sm md:text-base">{{ script.longDescription }}</p>
+             <p class="text-gray-600 text-sm md:text-base">{{ script.description }}</p> 
             </div>
 
             <div>
               <h3 class="text-lg md:text-xl font-semibold mb-3">Xüsusiyyətlər</h3>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <li v-for="feature in script.features" :key="feature" class="flex items-center text-gray-600 text-sm md:text-base">
-                  <font-awesome icon='fa-check' class="text-green-500 mr-2"></font-awesome>
+               <li v-for="feature in script.features" :key="feature" class="flex items-center text-gray-600 text-sm md:text-base">
+                  <font-awesome icon="fa-check" class="text-green-500 mr-2"></font-awesome>
                   {{ feature }}
-                </li>
+                </li> 
               </ul>
             </div>
           </div>
@@ -30,99 +36,100 @@
 
         <div class="gap-6 flex flex-col">
           <div class="bg-white p-6 rounded-lg shadow-lg border">
-            <div class="text-2xl md:text-3xl font-bold mb-4">{{ script.price }}</div>
+           <!--  <div class="text-2xl md:text-3xl font-bold mb-4">{{ script.price }}</div> -->
             <button class="w-full py-3 text-sm md:text-base bg-blue-600 text-white rounded-md hover:bg-blue-700 mb-3">
               Al
             </button>
-            <button class="w-full py-3 text-sm md:text-base border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
+            <a :href="script.demoLink" class="btn w-full py-3 text-sm md:text-base border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50">
               Demo Bax
-            </button>
+            </a>
           </div>
 
           <div class="bg-white p-6 rounded-lg shadow-lg border">
             <div class="flex items-center justify-between mb-3">
               <div class="text-gray-600 text-sm md:text-base">Kateqoriya</div>
-              <div class="font-semibold">{{ script.category }}</div>
+              <div class="font-semibold">{{ script.category.name }}</div> 
             </div>
             <div class="flex items-center justify-between mb-3">
-              <div class="text-gray-600 text-sm md:text-base">Yükləmə sayı</div>
-              <div class="font-semibold">{{ script.downloads }}</div>
-            </div>
-            <div class="flex items-center justify-between">
+              <div class="text-gray-600 text-sm md:text-base">Bəyənilmə sayı</div>
+              <div class="font-semibold">{{ script.favorites.length }}</div> 
+            </div> 
+          <!-- <div class="flex items-center justify-between">
               <div class="text-gray-600 text-sm md:text-base">Reytinq</div>
               <div class="flex items-center">
-                <font-awesome icon='fa-star' class="text-yellow-400 mr-1"></font-awesome>
+                <font-awesome icon="fa-star" class="text-yellow-400 mr-1"></font-awesome>
                 <span class="font-semibold">{{ script.rating }}</span>
               </div>
-            </div>
+            </div> -->
           </div>
-          
+          <div class="bg-white p-6 rounded-lg shadow-lg border">
+                  <h3 class="font-semibold mb-4">Sistem Tələbləri</h3>
+                  <ul class="space-y-3">
+                    <li
+                      v-for="req in script.requirements"
+                      :key="req"
+                      class="flex items-center text-gray-600"
+                    >
+                      <font-awesome icon="fa-circle" class="text-xs text-blue-600 mr-2"></font-awesome>
+                      {{ req }}
+                    </li>
+                  </ul>
+            </div>
         </div>
-       
       </div>
-      <div class="mt-5">
-          <h3 class="text-xl font-semibold mb-6">Şərhlər</h3>
-                <div class="gap-6 flex flex-col">
-                  <div v-for="comment in script.comments" :key="comment.id" class="bg-white p-6 rounded-lg shadow">
-                    <div class="flex items-center mb-4">
-                      <img :src="comment.avatar" :alt="comment.user" class="w-12 h-12 rounded-full mr-4">
-                      <div>
-                        <div class="font-semibold">{{ comment.user }}</div>
-                        <div class="flex items-center">
-                          <div class="flex text-yellow-400 mr-2">
-                            <font-awesome v-for="star in comment.rating" :key="star" icon='fa-star'></font-awesome>
-                          </div>
-                          <span class="text-gray-500">{{ comment.date }}</span>
+
+      <div v-if="status === 'success'" class="mt-5">
+        <h3 class="text-xl font-semibold mb-6">Şərhlər</h3>
+        <div class="bg-gray-50 p-6 rounded-lg mb-6">
+                      <div class="flex items-center mb-4">
+                        <div class="text-xl mr-2">Xal:</div>
+                        <div class="flex">
+                          <button
+                            v-for="star in 5"
+                            :key="star"
+                            
+                            class="text-gray-300 text-2xl mr-1"
+                          >
+                            <font-awesome icon="fa-star"></font-awesome>
+                          </button>
                         </div>
                       </div>
+                      <textarea
+                        
+                        placeholder="Xalınızı yazın..."
+                        class="w-full p-4 border rounded-lg mb-4 h-32"
+                      ></textarea>
+                      <button
+                        
+                        class="rounded-md whitespace-nowrap px-6 py-3 bg-blue-600 text-white hover:bg-blue-700"
+                      >
+                        Şəth et
+                      </button>
                     </div>
-                    <p class="text-gray-600">{{ comment.comment }}</p>
-                  </div>
-                </div>
-                
+        <div class="gap-6 flex flex-col" v-if="script.comments.length > 0">
+          <Comment v-for="comment in script.comments" :key="comment.id" :comment="comment"></Comment>
+        </div> 
+        <div v-else class="text-gray-600 text-sm md:text-base">
+          Şərh yoxdur
         </div>
+      </div>
     </div>
   </div>
 </template>
 
-  
-  <script lang="ts" setup>
-  const script = ref({
-    id: 1,
-    title: 'E-ticarət İdarəetmə Paneli',
-    description: 'Stok idarəetməsi, sifariş izləmə və müştəri analizi ilə tam xüsusiyyətli e-ticarət paneli.',
-    price: '₼799',
-    category: 'Veb İnkişaf',
-    rating: 4.9,
-    downloads: '2.3k',
-    isFavorite: true,
-    image: 'https://public.readdy.ai/ai/img_res/525cc20093bc351b43167965861f79be.jpg',
-    requirements: [
-      'Node.js 14+',
-      'MongoDB 4.4+',
-      'Redis 6+',
-      'Minimum 2GB RAM',
-      'Linux/Unix əməliyyat sistemi'
-    ],
-    features: [
-      'Tam avtomatik data sinxronizasiyası',
-      'Gerçək zamanlı analitik hesabatlar',
-      'Fərdiləşdirilə bilən idarə paneli',
-      'REST API dəstəyi',
-      'Çoxdilli dəstək',
-      'İnkişaf etmiş təhlükəsizlik funksiyaları'
-    ],
-    longDescription: 'Bu skript, müasir veb tətbiqləri üçün nəzərdə tutulmuş tam həll təqdim edir. Gerçək zamanlı hesabatlar və avtomatik sinxronizasiya ilə layihələrinizi daha yüksək səviyyəyə çıxarın.',
-    comments: [
-      {
-        id: 1,
-        user: 'Mehmet Əliyev',
-        avatar: 'https://public.readdy.ai/ai/img_res/b8fe48e1fc22c46a13983288965e2ef4.jpg',
-        rating: 5,
-        date: '2025-02-25',
-        comment: 'Möhtəşəm bir skript! Layihəmizə əlavə etdikdən sonra iş yükümüz əhəmiyyətli dərəcədə azaldı.'
-      }
-    ]
-  });
-  </script>
-  
+<script lang="ts" setup>
+import { ref } from "vue";
+import { useRoute, useAsyncData } from "#imports";
+
+const script = ref<ScriptType | any>(null);
+const { slug } = useRoute().params;
+const { data, status } = useAsyncData<responseScriptDetailType>(`script-${slug}`, () => $fetch(`/api/products/product-detail/${slug}`), {
+  server: true
+});
+
+watch(status, (newStatus) => {
+  if (newStatus === 'success') {
+    script.value = data.value?.data;
+  }
+})
+</script>

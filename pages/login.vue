@@ -48,11 +48,10 @@
           >Şifrəmi unutdum</a
         >
       </div>
-
       <button
         type="submit"
         :disabled="isLoading"
-        class="w-full rounded-md py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium flex justify-center items-center gap-2 disabled:bg-blue-300"
+        class="w-full cursor-pointer rounded-md py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium flex justify-center items-center gap-2 disabled:bg-blue-300"
       >
         <span v-if="isLoading">Daxil olunur...</span>
         <span v-else>Daxil ol</span>

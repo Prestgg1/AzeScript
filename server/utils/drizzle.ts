@@ -7,7 +7,9 @@ import postgres from "postgres";
 const sql = postgres(process.env.SUPABASE_URL as string);
 
 export const useDrizzle = () => {
-    return drizzle(sql);
+    return drizzle(sql, {
+        schema
+    });
 }
 
 export const tables = schema;
