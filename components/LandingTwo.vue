@@ -20,10 +20,10 @@
           </div>
         </div>
         <div class="lg:w-1/2 w-full mb-8 lg:mb-0">
-          <img 
+          <NuxtImg 
             src="/img/heroimage.jpg" 
             alt="Hero" 
-            class="w-full h-64 sm:h-[400px] lg:h-[500px] object-cover rounded-lg shadow-lg">
+            class="w-full h-64 sm:h-[400px] lg:h-[500px] object-cover rounded-lg shadow-lg" />
         </div>
       </div>
     </section>

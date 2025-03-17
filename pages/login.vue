@@ -51,7 +51,7 @@
       <button
         type="submit"
         :disabled="isLoading"
-        class="w-full cursor-pointer rounded-md py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium flex justify-center items-center gap-2 disabled:bg-blue-300"
+        class="w-full btn cursor-pointer  py-3 bg-blue-600 text-white hover:bg-blue-700 font-medium flex justify-center items-center gap-2 disabled:bg-blue-300"
       >
         <span v-if="isLoading">Daxil olunur...</span>
         <span v-else>Daxil ol</span>
@@ -69,7 +69,7 @@
       <button
         type="button"
         @click="handleGoogleLogin"
-        class="w-full rounded-md py-3 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 font-medium flex items-center justify-center gap-2"
+        class="w-full btn py-3 px-4 border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 font-medium flex items-center justify-center gap-2"
       >
         <font-awesome :icon="['fab', 'google']" class="text-[20px]" />
         <span>Google ilə daxil ol</span>
@@ -91,7 +91,7 @@
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { authClient } from "~/lib/auth-client";
 import { useToast } from "vue-toast-notification";
-
+const token = useCookie('token')
 
 const $toast = useToast({
   position: "top-right",
@@ -112,6 +112,11 @@ const handleLogin = async (values: any) => {
         isLoading.value = true;
       },
       onSuccess: (ctx) => {
+        const authToken = ctx.response.headers.get("set-auth-token") 
+        console.log(authToken)
+            if(authToken){
+              token.value=authToken;
+            };
         $toast.success("Uğurla daxil olundu!");
       },
       onError: (ctx) => {

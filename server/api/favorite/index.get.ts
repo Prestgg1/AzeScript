@@ -1,5 +1,4 @@
-import { eq } from "drizzle-orm";
-import { favorites } from "~/db/schema"
+
 import { useDrizzle } from "~/server/utils/drizzle"
 import { auth } from "~/utils/auth";
 export default defineEventHandler(async (event) => {

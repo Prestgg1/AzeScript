@@ -24,7 +24,7 @@
     <div class="relative">
     <button @click="toggleCategoryFilter" class="!rounded-button flex items-center gap-2 rounded-lg border bg-white px-4 py-2.5">
     <span>{{ selectedCategory || 'Kategori' }}</span>
-    <i class="fas fa-chevron-down"></i>
+    <font-awesome icon="chevron-down"></font-awesome>
     </button>
     <div v-if="showCategoryFilter" class="absolute right-0 top-full z-10 mt-1 w-48 rounded-lg border bg-white shadow-lg">
     <div class="p-2">

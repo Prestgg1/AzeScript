@@ -1,6 +1,6 @@
 import { products, favorites } from "@/db/schema";
 import { useDrizzle } from "~/server/utils/drizzle";
-import { count, eq } from "drizzle-orm";
+import { and, count, eq, sql } from "drizzle-orm";
 import { auth } from "~/utils/auth";
 
 export default defineEventHandler(async (event) => {
@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     const session = await auth.api.getSession({
         headers: event.headers,
     });
+    console.log(session)
 
     const totalCount = await useDrizzle()
         .select({ count: count() })
@@ -21,9 +22,10 @@ export default defineEventHandler(async (event) => {
     // Kullanıcı ID'sini al
     const userId = session?.user?.id ?? null;
 
-    // Tüm ürünleri al
-    const scriptler = await useDrizzle()
-        .query.products.findMany({
+    // Eğer kullanıcı oturum açmamışsa favori durumunu kontrol etmemize gerek yok
+    const query = useDrizzle()
+        .query.products
+        .findMany({
             columns: {
                 id: true,
                 title: true,
@@ -41,14 +43,38 @@ export default defineEventHandler(async (event) => {
                         slug: true,
                     },
                 },
-                favorites: userId ? {
-                    columns: { id: true },
-                    where: (fav: typeof favorites) => eq(fav.userId, userId),
-                } : [],
             },
             limit,
             offset,
         });
+
+    let scriptler = await query;
+
+    // Favori durumu için, veritabanında bir "LEFT JOIN" ile favoriler sorgusu yapılır
+    if (userId) {
+        // Ürünlere, kullanıcının favori olup olmadığını eklemek için favoriler ile JOIN yapalım
+        const favoriteStatusQuery = useDrizzle()
+            .select({
+                productId: products.id,
+                has_favorited: sql`CASE WHEN ${eq(favorites.userId, userId)} AND ${eq(favorites.productId, products.id)} THEN TRUE ELSE FALSE END`,
+            })
+            .from(products)
+            .leftJoin(favorites, eq(products.id, favorites.productId))
+            .where(eq(favorites.userId, userId));
+
+        // Gelen favori durumu ile ürünleri birleştiriyoruz
+        const favoritesData = await favoriteStatusQuery;
+
+        // Favori durumu ile ürünleri eşleştiriyoruz
+        scriptler = scriptler.map((script) => {
+            // `favoritesData` içinde her ürün için favori durumu var mı diye kontrol ediyoruz
+            const isFavorited = favoritesData.some((fav) => fav.productId === script.id);
+            return {
+                ...script,
+                has_favorited: isFavorited, // Favori durumu ekleniyor
+            };
+        });
+    }
 
     return {
         data: scriptler,

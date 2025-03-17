@@ -59,10 +59,10 @@
         </NuxtLink>
         <Avatar v-if="session" class="self-center dropdown-top" :user="session.user" />
         <div v-else class="flex justify-between">
-          <NuxtLink to="/login" active-class="text-blue-600" class="rounded-md px-4 py-2 text-blue-600 hover:bg-blue-50 whitespace-nowrap">
+          <NuxtLink to="/login" active-class="text-blue-600" class="btn border-0 rounded-md px-4 py-2 text-blue-600 hover:bg-blue-50 whitespace-nowrap">
             Daxil ol
           </NuxtLink>
-          <NuxtLink to="/register" active-class="text-blue-600" class="rounded-md px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
+          <NuxtLink to="/register" active-class="text-blue-600" class="btn rounded-md px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 whitespace-nowrap">
             Qeydiyyatdan keç
           </NuxtLink>
         </div>

@@ -12,23 +12,25 @@
 		  <h2 class="text-3xl md:text-5xl font-bold mb-4 md:mb-6">
 			Kod Dünyasının Paylaşım Platforması
 		  </h2>
-		  <p class="text-lg md:text-xl mb-6 md:mb-8">
+		  <p class="text-lg md:w-2/3  md:text-xl mb-6 md:mb-8">
 			Kodunuzu paylaşın, satın, kəşf edin və inkişaf etdirin. 
 			Proqram təminatı dünyasının ən böyük skript paylaşım platformasına xoş gəlmisiniz.
 		  </p>
 		  <div
 			class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start"
 		  >
-			<button
-			  class="rounded-md px-6 md:px-8 py-3 bg-white text-blue-600 hover:bg-gray-100"
+			<NuxtLink
+			href="/scripts"
+			  class="btn duration-200  rounded-md px-6 md:px-8 py-3 bg-white text-blue-600 hover:bg-gray-100"
 			>
 			  Başla
-			</button>
-			<button
-			  class="rounded-md px-6 md:px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-blue-600"
+			</NuxtLink>
+			<NuxtLink
+			href="/categories"
+			  class="rounded-md duration-200 bg-transparent px-6 btn md:px-8 py-3 border-2 border-white text-white hover:bg-white hover:text-blue-600"
 			>
 			  Kəşf et
-			</button>
+			</NuxtLink>
 		  </div>
 		</div>
 		<div
