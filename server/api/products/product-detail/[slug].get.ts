@@ -32,11 +32,7 @@ export default defineEventHandler(async (event) => {
                     id: true
                 }
             },
-            comments: {
-                columns: {
-                    id: true,
-                }
-            }
+            comments: true
         },
         where: eq(products.slug, slug)
     })

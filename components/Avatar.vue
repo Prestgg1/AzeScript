@@ -3,7 +3,7 @@
     <div tabindex="0" class="m-1 flex items-center gap-2 cursor-pointer">
       <div class="avatar">
         <div class="w-10 h-10 rounded-full">
-          <img :src="user.image || 'https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'" alt="">
+          <NuxtImg :src="user.image || 'https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'" alt=""/>
         </div>
       </div>
       <span>{{ user.username }}</span>

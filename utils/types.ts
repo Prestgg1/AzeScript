@@ -1,6 +1,6 @@
 import type { User } from 'better-auth';
 import { Comment } from './../.nuxt/components.d';
-import { comments } from './../db/schema';
+import { comments, favorites } from './../db/schema';
 export interface responseCategoryType {
     data: {
         id: number;
@@ -24,15 +24,15 @@ export interface ScriptType {
     comments:Comment[],
     averageRating: number;
     image: string;
+    favorites: favoritesType[],
     demoLink:string,
     has_favorited: boolean
 };
 export type Comment = {
     id:number,
     user: User,
-    date:  string,
     comment:string,
-    rate:number
+    rating:number
 }
 export interface favoritesType {
     id: number;

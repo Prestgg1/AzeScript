@@ -81,54 +81,20 @@
             </div>
         </div>
       </div>
-
-      <div v-if="status === 'success'" class="mt-5">
-        <h3 class="text-xl font-semibold mb-6">Şərhlər</h3>
-        <div class="bg-gray-50 p-6 rounded-lg mb-6">
-                      <div class="flex items-center mb-4">
-                        <div class="text-xl mr-2">Xal:</div>
-                        <div class="flex">
-<div class="rating">
-  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" aria-label="1 star" />
-  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" aria-label="2 star"  />
-  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" aria-label="3 star" />
-  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" aria-label="4 star" />
-  <input type="radio" name="rating-2" class="mask mask-star-2 bg-orange-400" aria-label="5 star" />
-</div>
-                            
-                          
-                        </div>
-                      </div>
-                      <textarea
-                        
-                        placeholder="Xalınızı yazın..."
-                        class="w-full p-4 border rounded-lg mb-4 h-32"
-                      ></textarea>
-                      <button
-                        
-                        class="rounded-md whitespace-nowrap px-6 py-3 bg-blue-600 text-white hover:bg-blue-700"
-                      >
-                        Şəth et
-                      </button>
-                    </div>
-        <div class="gap-6 flex flex-col" v-if="data?.comments && data?.comments.length>0">
-          <Comment v-for="comment in data?.comments" :key="comment.id" :comment="comment"></Comment>
-        </div> 
-        <div v-else class="text-gray-600 text-sm md:text-base">
-          Şərh yoxdur
-        </div>
-      </div>
+<Comments  v-if="status=='success'" :comments='data?.comments'  :productid="data?.id"/>
+    
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
 import { useRoute, useAsyncData, type ScriptType } from "#imports";
 
 const { slug } = useRoute().params;
 const { data, status } = useAsyncData<ScriptType>(`script-${slug}`, () => $fetch(`/api/products/product-detail/${slug}`), {
   server: true
 });
+async function  sendComment(){
 
+}
 </script>

@@ -81,7 +81,7 @@ const { data: scripts, status, error, refresh } = useAsyncData<responseScriptTyp
 }, {
   server: true,
 });
-
+console.log(scripts.value)
 // Token geldiğinde paginasyon verisini al
 watchEffect(() => {
   if (status.value === 'success' && scripts.value) {

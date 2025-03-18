@@ -43,7 +43,7 @@ const isFavorite = ref(script.has_favorited);
 let debounceTimeout: NodeJS.Timeout | null = null;
 
 async function toggleFavorite(id: number): Promise<void> {
-    // Her tıklamada önceki zamanlayıcıyı temizle ve yeniden başlat
+        isFavorite.value = !isFavorite.value;
     if (debounceTimeout) {
         clearTimeout(debounceTimeout);
     }
@@ -51,18 +51,17 @@ async function toggleFavorite(id: number): Promise<void> {
     // 1 saniye sonra API isteği yap
     debounceTimeout = setTimeout(async () => {
         // Favori durumu değiştir
-        isFavorite.value = !isFavorite.value;
 
         try {
             let response;
             if (isFavorite.value) {
-                response = await useFetch(`/api/favorite/${id}`, {  
+                response = await $fetch(`/api/favorite/${id}`, {  
                     headers: {
                         'Authorization': 'Bearer ' + token.value
                     }
                 });
             } else {
-                response = await useFetch(`/api/favorite/delete/${id}`, {  
+                response = await $fetch(`/api/favorite/delete/${id}`, {  
                     headers: {
                         'Authorization': 'Bearer ' + token.value
                     },
@@ -74,12 +73,11 @@ async function toggleFavorite(id: number): Promise<void> {
                 throw new Error('Favori işlemi başarısız oldu');
             }
 
-            $toast.success(`Product ${isFavorite.value ? 'added to' : 'removed from'} favorites`);
+            $toast.success(`Script ${isFavorite.value ? 'sevilənlərə əlavə olundu' : 'sevilənlərdən çıxardıldı'}`);
         } catch (error) {
-            // Hata durumunda, favoriyi geri al
             isFavorite.value = !isFavorite.value;
             $toast.error('Bir hata oluştu, tekrar deneyin.');
         }
-    }, 1000);  // 1 saniye gecikme
+    }, 1000);  
 }
 </script>
