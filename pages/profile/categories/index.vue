@@ -88,7 +88,7 @@
   }
   
   definePageMeta({
-      layout: "dashboard",
+      layout: "dashboard",  
   });
   
   const categories: categoryType[] | any = ref([]);
@@ -129,7 +129,7 @@
           image: values.image || "https://public.readdy.ai/ai/img_res/7bb2cf08f30e8f2668b7b966e800ce97.jpg",
         }),
       });
-  
+
       console.log("Kategori başarıyla eklendi:", response);
       fetchCategories(); // Yeni kategoriyi listeye eklemek için tekrar API çağrısı yapıyoruz
     } catch (error) {
