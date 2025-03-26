@@ -93,6 +93,7 @@ import { authClient } from "~/lib/auth-client";
 import { useToast } from "vue-toast-notification";
 const token = useCookie('token')
 
+
 const $toast = useToast({
   position: "top-right",
 });

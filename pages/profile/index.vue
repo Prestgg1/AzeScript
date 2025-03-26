@@ -115,6 +115,9 @@
 definePageMeta({
   layout: "dashboard",
 })
+
+const token = useCookie('token')
+
 import * as echarts from 'echarts';
 
 const statsData = [
@@ -150,7 +153,11 @@ const pagination = ref({
 
 const fetchScripts = async () => {
   try {
-    const response = await $fetch<responseScriptType>('/api/products/user');
+    const response = await $fetch<responseScriptType>('/api/products/user', {
+      headers: {
+        'Authorization': 'Bearer ' + token.value
+      }
+    });
     scripts.value = response.data;
     pagination.value = response.pagination;
     console.log(scripts.value);

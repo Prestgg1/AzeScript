@@ -4,11 +4,10 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import * as schema from "@/db/schema";
 import { useDrizzle } from "@/server/utils/drizzle";
 
-/* import { sendUserVerificationEmail } from "~~/server/utils/email"; */
 
 export const auth = betterAuth({
     database: drizzleAdapter(useDrizzle(), {
-        provider: "sqlite",
+        provider: "pg",
         schema: {
             ...schema
         }
@@ -42,12 +41,7 @@ export const auth = betterAuth({
             enabled: true,
         }
     },
-    /*     emailVerification: {
-            async sendVerificationEmail({ user, url }) {
-                await sendUserVerificationEmail(user, url);
-            },
-            sendOnSignUp: true,
-        }, */
+
     emailAndPassword: {
         enabled: true,
         requireEmailVerification: true,
@@ -56,10 +50,7 @@ export const auth = betterAuth({
         },
     },
     socialProviders: {
-        /*   google: {
-              clientId: process.env.GOOGLE_CLIENT_ID as string,
-              clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-          } */
+
     },
     plugins: [
         admin({
